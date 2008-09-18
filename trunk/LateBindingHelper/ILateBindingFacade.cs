@@ -12,6 +12,18 @@ namespace LateBindingHelper
         /// </remarks>
         /// <typeparam name="T">Type of the data returned by the method.</typeparam>
         /// <param name="methodName">Name of the method to be invoked.</param>
+        /// <returns>The return value of the operation casted to the type parameter T</returns>
+        T Call<T>(string methodName);
+
+        /// <summary>
+        /// Calls an object method, which returns a value, using Late Binding.
+        /// </summary>
+        /// <remarks>
+        /// If the invoked method does not originally returned a value,
+        /// then a default(T) value is returned by this method.
+        /// </remarks>
+        /// <typeparam name="T">Type of the data returned by the method.</typeparam>
+        /// <param name="methodName">Name of the method to be invoked.</param>
         /// <param name="args">
         /// List of parameters passed to the invocation. They must have same order and type
         /// expected by the method invoked.
@@ -20,7 +32,7 @@ namespace LateBindingHelper
         T Call<T>(string methodName, object[] args);
 
         /// <summary>
-        /// Calls an late binding object method using Late Binding, passing
+        /// Calls an operation over an object using Late Binding passing
         /// some or all the arguments by reference and also returning a value.
         /// </summary>
         /// <remarks>
@@ -54,7 +66,17 @@ namespace LateBindingHelper
         object GetIndex(object index);
 
         /// <summary>
-        /// Calls an late binding object method using Late Binding.
+        /// Calls an operation over an object using Late Binding.
+        /// </summary>
+        /// <remarks>
+        /// This method call does not return a value, even if the method invoked
+        /// using late binding does.
+        /// </remarks>
+        /// <param name="methodName">Name of the method to be invoked</param>
+        void Call(string methodName);
+
+        /// <summary>
+        /// Calls an operation over an object using Late Binding.
         /// </summary>
         /// <remarks>
         /// This method call does not return a value, even if the method invoked
@@ -68,8 +90,8 @@ namespace LateBindingHelper
         void Call(string methodName, object[] args);
 
         /// <summary>
-        /// Calls an late binding object method using Late Binding, passing
-        /// some or all the arguments by reference.
+        /// Calls an operation over an object using Late Binding
+        /// passing some or all the arguments by reference.
         /// </summary>
         /// <param name="methodName">Name of the method to be invoked.</param>
         /// <param name="byRef">Contains a list of booleans indicating if the which of the the args
@@ -79,7 +101,7 @@ namespace LateBindingHelper
         void Call(string methodName, bool[] byRef, object[] args);
 
         /// <summary>
-        /// Calls an operation of specifyed name, with arguments.
+        /// Calls an operation of specified name, with some arguments.
         /// Operation in this context is any method or property in
         /// an object
         /// </summary>
