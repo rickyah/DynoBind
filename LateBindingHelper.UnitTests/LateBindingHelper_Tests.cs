@@ -7,6 +7,7 @@ using NUnit.Framework.SyntaxHelpers;
 
 using LateBindingHelper;
 using LateBindingHelper.Tests;
+using System.Reflection;
 
 namespace LateBindingHelper.UnitTests
 {
@@ -131,6 +132,32 @@ namespace LateBindingHelper.UnitTests
             _lateBindingFacade.SetIndex(4, "[myValue]");
             
             Assert.That(_lateBindingFacade.GetIndex<string>(5), Is.EqualTo( ("value:" + "[myValue]" ) ));
+        }
+
+        [Test]
+        public void WordAutomationTest_NotReallyATestUnit()
+        {
+            ILateBindingFacade word = LateBindingFactory.CrateAutomationBinding("Word.Application");
+            
+
+            ILateBindingFacade wordDoc = word.Get<ILateBindingFacade>("Documents").Call<ILateBindingFacade>("Add");
+
+            ILateBindingFacade selection = word.Get<ILateBindingFacade>("Selection");
+
+            string str = "Hello World!";
+
+            word.Set("Visible", true);
+
+            foreach (char c in str)
+            {
+                selection.Call("TypeText", Args.Build(c.ToString()));
+                System.Threading.Thread.Sleep(200);
+            }
+
+            //Needed to get the type of the enumeration 
+            Type enumType = Assembly.LoadWithPartialName("Microsoft.Office.Interop.Word").GetType("Microsoft.Office.Interop.Word.WdSaveOptions", false);
+
+            word.Call("Quit", Args.Build(Activator.CreateInstance(enumType)));
         }
         #endregion
     }
