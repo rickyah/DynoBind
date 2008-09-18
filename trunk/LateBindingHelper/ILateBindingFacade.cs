@@ -121,7 +121,7 @@ namespace LateBindingHelper
         /// <exception cref="Exception">
         /// Throwed if the call fails
         /// </exception>
-        bool CallOperation(string operationName, object[] args, out object retVal, LateBindingFacade.EOperationType operationType);
+        bool CallOperation(string operationName, object[] args, out object retVal, EOperationType operationType);
         
         /// <summary>
         /// Calls an operation of specifyed name, with arguments.
@@ -159,7 +159,7 @@ namespace LateBindingHelper
             object[] args,
             out object retVal,
             System.Reflection.ParameterModifier refParams,
-            LateBindingFacade.EOperationType type);
+            EOperationType type);
 
         /// <summary>
         /// Gets a value of a property using Late Binding in a strong-typed bias.
