@@ -14,40 +14,8 @@ namespace LateBindingHelper
     /// This example shows how to call a method that returns an int with two parameters, one
     /// of them passed by reference:
     /// </example>
-    public class LateBindingFacade : LateBindingHelper.ILateBindingFacade
+    internal class LateBindingFacade : LateBindingHelper.ILateBindingFacade
     {
-        /// <summary>
-        /// Establish the type of binding that 
-        /// .NET must perform on an late binding call
-        /// </summary>
-        public enum EOperationType
-        {
-            /// <summary>
-            /// The operation calls a method
-            /// </summary>
-            METHOD,
-
-            /// <summary>
-            /// The operation sets the value for a property
-            /// </summary>
-            PROPERTY_GET,
-
-            /// <summary>
-            /// The operation retrieves a value for a property
-            /// </summary>
-            PROPERTY_SET,
-
-            /// <summary>
-            /// The operation gets the value for a field
-            /// </summary>
-            FIELD_GET,
-
-            /// <summary>
-            /// The operation sets the value for a field
-            /// </summary>
-            FIELD_SET
-        }
-
         #region Static Properties
 
         /// <summary>
@@ -62,6 +30,16 @@ namespace LateBindingHelper
         #endregion
 
         #region Public methods
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LateBindingFacade"/> class
+        /// using an Automation object name.
+        /// </summary>
+        /// <param name="objectName">Name of the object we want to instanciate.</param>
+        public LateBindingFacade(string objectName)
+        {
+            _instance = Marshal.GetActiveObject(objectName);
+        }
 
         /// <summary>
         /// Creates an Late binding facade instance using a previously created instance.
@@ -225,7 +203,7 @@ namespace LateBindingHelper
                 EOperationType.METHOD);
 
             if (retVal != null)
-                return (T)retVal;
+                return ReturnValue<T>(retVal);
 
             else return default(T);
         }
@@ -268,7 +246,7 @@ namespace LateBindingHelper
                 EOperationType.METHOD);
 
             if (retVal != null)
-                return (T)retVal;
+                return ReturnValue<T>(retVal);
 
             else return default(T);
         }
@@ -306,7 +284,7 @@ namespace LateBindingHelper
                 else throw;
             }
 
-            return (T)retVal;
+            return ReturnValue<T>(retVal);
         }
 
         /// <summary>
@@ -331,7 +309,7 @@ namespace LateBindingHelper
 
             CallOperation("Item", new object[] { index }, out retVal, EOperationType.PROPERTY_GET);
 
-            return (T)retVal;
+            return ReturnValue<T>(retVal);
         }
 
         /// <summary>
@@ -596,6 +574,14 @@ namespace LateBindingHelper
 
             return BindingFlags.Default;
 
+        }
+
+        private static T ReturnValue<T>(object retVal)
+        {
+            if (typeof(ILateBindingFacade).IsAssignableFrom(typeof(T)))
+                return (T) (object)new LateBindingFacade(retVal); //Ugly cast 
+            else
+                return (T)retVal;
         }
 
         #endregion
