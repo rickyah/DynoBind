@@ -31,6 +31,14 @@ namespace LateBindingHelper.Tests
         }
 
         /// <summary>
+        /// A simple method with no parameters or return values.
+        /// </summary>
+        public void SimpleMethod()
+        {
+            Console.Write("I'm a simple method!");
+        }
+
+        /// <summary>
         /// Method with a ref parameters, multiplies it by five
         /// </summary>
         /// <param name="x"></param>
