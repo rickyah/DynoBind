@@ -1,0 +1,463 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LateBindingHelper</name>
+    </assembly>
+    <members>
+        <member name="M:LateBindingHelper.ILateBindingFacade.Call``1(System.String,System.Object[])">
+            <summary>
+            Calls an object method, which returns a value, using Late Binding.
+            </summary>
+            <remarks>
+            If the invoked method does not originally returned a value,
+            then a default(T) value is returned by this method.
+            </remarks>
+            <typeparam name="T">Type of the data returned by the method.</typeparam>
+            <param name="methodName">Name of the method to be invoked.</param>
+            <param name="args">
+            List of parameters passed to the invocation. They must have same order and type
+            expected by the method invoked.
+            </param>
+            <returns>The return value of the operation casted to the type parameter T</returns>
+        </member>
+        <member name="M:LateBindingHelper.ILateBindingFacade.Call``1(System.String,System.Boolean[],System.Object[])">
+            <summary>
+            Calls an late binding object method using Late Binding, passing
+            some or all the arguments by reference and also returning a value.
+            </summary>
+            <remarks>
+            If the invoked method does not originally returned a value,
+            then a default(T) value is returned by this method.
+            </remarks>
+            <typeparam name="T">Type of the data returned by the method.</typeparam>
+            <param name="methodName">Name of the method to be invoked.</param>
+            <param name="byRef">Contains a list of booleans indicating if the which of the the args
+            passed will be passed as reference.</param>
+            <param name="args">
+            List of parameters passed to the invocation. They must have same order and type
+            expected by the method invoked.
+            </param>
+            <returns>The return value of the operation casted to the type parameter T</returns>
+        </member>
+        <member name="M:LateBindingHelper.ILateBindingFacade.Call(System.String,System.Object[])">
+            <summary>
+            Calls an late binding object method using Late Binding.
+            </summary>
+            <remarks>
+            This method call does not return a value, even if the method invoked
+            using late binding does.
+            </remarks>
+            <param name="methodName">Name of the method to be invoked</param>
+            <param name="args">
+            List of parameters with the order and type
+            required by the method invoked.
+            </param>
+        </member>
+        <member name="M:LateBindingHelper.ILateBindingFacade.Call(System.String,System.Boolean[],System.Object[])">
+            <summary>
+            Calls an late binding object method using Late Binding, passing
+            some or all the arguments by reference.
+            </summary>
+            <param name="methodName">Name of the method to be invoked.</param>
+            <param name="byRef">Contains a list of booleans indicating if the which of the the args
+            passed will be passed as reference.</param>
+            <param name="args">List of parameters with the order and type
+            required by the method invoked.</param>
+        </member>
+        <member name="M:LateBindingHelper.ILateBindingFacade.CallOperation(System.String,System.Object[],System.Object@,LateBindingHelper.LateBindingFacade.EOperationType)">
+            <summary>
+            Calls an operation of specifyed name, with arguments.
+            Operation in this context is any method or property in
+            an object
+            </summary>
+            <param name="operationName">Name of operation to be called</param>
+            <param name="args">Args for this operation call. Must be passed as an array of
+            objects, or null if the method doesn't need arguments</param>
+            <param name="retVal">Object containing the operation return value, or null if
+            method returns nothing.
+            The object must be casted by the user to the correct type</param>
+            <param name="operationType">Type of the operation.</param>
+            <returns>
+            Bool if call was succesfull, false if some error ocurred.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Throwed if any argument is incorrect
+            </exception>
+            <exception cref="T:System.Exception">
+            Throwed if the call fails
+            </exception>
+        </member>
+        <member name="M:LateBindingHelper.ILateBindingFacade.CallOperation(System.String,System.Object[],System.Object@,System.Reflection.ParameterModifier,LateBindingHelper.LateBindingFacade.EOperationType)">
+            <summary>
+            Calls an operation of specifyed name, with arguments.
+            Operation in this context is any method or property in
+            an object
+            </summary>
+            <param name="operationName">
+            Name of operation to be called</param>
+            <param name="args">
+            Args for this operation call. Must be passed as an array of 
+            objects, or null if the method doesn't need arguments
+            </param>
+            <param name="retVal">
+            Object containing the operation return value, or null if 
+            method returns nothing.
+            The object must be casted by the user to the correct type
+            </param>
+            <param name="refParams">
+            Indicates if any of the arguments must be passed by reference 
+            </param>
+            <param name="type">
+            Value from <see cref="!:EOperationType"/> representing
+            the type of call we are making
+            </param>
+            <returns>
+            Bool if call was succesfull, false if some error ocurred. 
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Throwed if any argument is incorrect
+            </exception>
+            <exception cref="T:System.Exception">
+            Throwed if the call fails
+            </exception>
+        </member>
+        <member name="M:LateBindingHelper.ILateBindingFacade.Get``1(System.String)">
+            <summary>
+            Gets a value of a property using Late Binding in a strong-typed bias.
+            </summary>
+            <typeparam name="T">Type of the data to be returned by the property.</typeparam>
+            <param name="propertyName">Name of the property to be accessed.</param>
+            <returns>The value of the property, strong typed</returns>
+        </member>
+        <member name="M:LateBindingHelper.ILateBindingFacade.Get(System.String)">
+            <summary>
+            Gets the value of a property using Late Binding
+            </summary>
+            <param name="propertyName">Name of the property to be accessed.</param>
+            <returns>The value of the property, as an object.</returns>
+        </member>
+        <member name="M:LateBindingHelper.ILateBindingFacade.Set(System.String,System.Object)">
+            <summary>
+            Set an object property using Late Binding
+            </summary>
+            <param name="propertyName"></param>
+            <param name="value"></param>
+        </member>
+        <member name="T:LateBindingHelper.ErrorStrings">
+            <summary>
+              Clase de recurso con establecimiento inflexible de tipos, para buscar cadenas traducidas, etc.
+            </summary>
+        </member>
+        <member name="P:LateBindingHelper.ErrorStrings.ResourceManager">
+            <summary>
+              Devuelve la instancia de ResourceManager almacenada en caché utilizada por esta clase.
+            </summary>
+        </member>
+        <member name="P:LateBindingHelper.ErrorStrings.Culture">
+            <summary>
+              Reemplaza la propiedad CurrentUICulture del subproceso actual para todas las
+              búsquedas de recursos mediante esta clase de recurso con establecimiento inflexible de tipos.
+            </summary>
+        </member>
+        <member name="P:LateBindingHelper.ErrorStrings.INVALID_OBJECT">
+            <summary>
+              Busca una cadena traducida similar a Provide a valid Automation object.
+            </summary>
+        </member>
+        <member name="P:LateBindingHelper.ErrorStrings.LATEBINDING_CALL_FAILED">
+            <summary>
+              Busca una cadena traducida similar a Automation call failed.
+            </summary>
+        </member>
+        <member name="P:LateBindingHelper.ErrorStrings.LATEBINDING_EMPTY_CALL_STRING">
+            <summary>
+              Busca una cadena traducida similar a Enter an operation to be called.
+            </summary>
+        </member>
+        <member name="P:LateBindingHelper.ErrorStrings.LATEBINDING_MISMATCHING_ARGS_AND_REFERENCE_ARRAYS">
+            <summary>
+              Busca una cadena traducida similar a Array length is different from args length.
+            </summary>
+        </member>
+        <member name="P:LateBindingHelper.ErrorStrings.LATEBINDING_OBJECT_NOT_SET">
+            <summary>
+              Busca una cadena traducida similar a Automation object instance not set.
+            </summary>
+        </member>
+        <member name="T:LateBindingHelper.Args">
+            <summary>
+            Simplifies operations over arguments
+            </summary>
+        </member>
+        <member name="M:LateBindingHelper.Args.ByRefIndexs(System.Int32[])">
+            <summary>
+            Given a list of integers and builds an array of <see cref="T:System.Boolean"/>
+            with a length equal to the maximum integer value found.
+            The positions in the list integer are then set to <c>true</c>
+            in the created bool array, before returning it; 
+            </summary>
+            <remarks>
+            Negative index are discarted;
+            </remarks>
+            <param name="args">List of index in a bool array to set the elements to true.</param>
+            <returns>a bool array with the elements with an index contained in the
+            argument array set to <c>true</c></returns>
+        </member>
+        <member name="M:LateBindingHelper.Args.Build(System.Object[])">
+            <summary>
+            Helper method for building a list of objects[] with the ones passed as parameter.
+            </summary>
+            <param name="args">list of objects t</param>
+            <returns></returns>
+        </member>
+        <member name="T:LateBindingHelper.LateBindingFacade">
+            <summary>
+            Facade Design Pattern for simplifing.NET Late Binding calls    
+            </summary>
+            <example>
+            This example shows how to call a method that returns an int with two parameters, one
+            of them passed by reference:
+            </example>
+        </member>
+        <member name="M:LateBindingHelper.LateBindingFacade.#ctor(System.Object)">
+            <summary>
+            Creates an Late binding facade instance using a previously created instance.
+            </summary>
+            <param name="obj">Instance of the type to be used</param>
+            <exception cref="T:System.ArgumentException">
+            If object is null
+            </exception>
+        </member>
+        <member name="M:LateBindingHelper.LateBindingFacade.#ctor(System.Type)">
+            <summary>
+            Creates an late binding facade for a type.
+            </summary>
+            <param name="type">The type we'll be using to perform the late binding calls</param>
+            <remarks>
+            The Type must support a default constructor.
+            </remarks>
+        </member>
+        <member name="M:LateBindingHelper.LateBindingFacade.#ctor(System.Type,System.String[])">
+            <summary>
+            Creates an late binding facade for a type.
+            </summary>
+            <param name="type">The type</param>
+            <param name="parameters">The parameters for the constructor.</param>
+            <remarks>
+            The Type must support a default constructor.
+            </remarks>
+        </member>
+        <member name="M:LateBindingHelper.LateBindingFacade.Call(System.String,System.Object[])">
+            <summary>
+            Calls an late binding object method using Late Binding.
+            </summary>
+            <remarks>
+            This method call does not return a value, even if the method invoked
+            using late binding does.
+            </remarks>
+            <param name="methodName">Name of the method to be invoked</param>
+            <param name="args">
+            List of parameters with the order and type
+            required by the method invoked.
+            </param>
+        </member>
+        <member name="M:LateBindingHelper.LateBindingFacade.Call(System.String,System.Boolean[],System.Object[])">
+            <summary>
+            Calls an late binding object method using Late Binding, passing
+            some or all the arguments by reference.
+            </summary>
+            <param name="methodName">Name of the method to be invoked.</param>
+            <param name="byRef">Contains a list of booleans indicating if the which of the the args
+            passed will be passed as reference.</param>
+            <param name="args">List of parameters with the order and type
+            required by the method invoked.</param>
+        </member>
+        <member name="M:LateBindingHelper.LateBindingFacade.Call``1(System.String,System.Object[])">
+            <summary>
+            Calls an object method, which returns a value, using Late Binding.
+            </summary>
+            <remarks>
+            If the invoked method does not originally returned a value,
+            then a default(T) value is returned by this method.
+            </remarks>
+            <typeparam name="T">Type of the data returned by the method.</typeparam>
+            <param name="methodName">Name of the method to be invoked.</param>
+            <param name="args">
+            List of parameters passed to the invocation. They must have same order and type
+            expected by the method invoked.
+            </param>
+            <returns>The return value of the operation casted to the type parameter T</returns>
+        </member>
+        <member name="M:LateBindingHelper.LateBindingFacade.Call``1(System.String,System.Boolean[],System.Object[])">
+            <summary>
+            Calls an late binding object method using Late Binding, passing
+            some or all the arguments by reference and also returning a value.
+            </summary>
+            <remarks>
+            If the invoked method does not originally returned a value,
+            then a default(T) value is returned by this method.
+            </remarks>
+            <typeparam name="T">Type of the data returned by the method.</typeparam>
+            <param name="methodName">Name of the method to be invoked.</param>
+            <param name="byRef">Contains a list of booleans indicating if the which of the the args
+            passed will be passed as reference.</param>
+            <param name="args">
+            List of parameters passed to the invocation. They must have same order and type
+            expected by the method invoked.
+            </param>
+            <returns>The return value of the operation casted to the type parameter T</returns>
+        </member>
+        <member name="M:LateBindingHelper.LateBindingFacade.Get``1(System.String)">
+            <summary>
+            Gets a value of a property using Late Binding in a strong-typed bias.
+            </summary>
+            <typeparam name="T">Type of the data to be returned by the property.</typeparam>
+            <param name="propertyName">Name of the property to be accessed.</param>
+            <returns>The value of the property, strong typed</returns>
+        </member>
+        <member name="M:LateBindingHelper.LateBindingFacade.Get(System.String)">
+            <summary>
+            Gets the value of a property using Late Binding
+            </summary>
+            <param name="propertyName">Name of the property to be accessed.</param>
+            <returns>The value of the property, as an object.</returns>
+        </member>
+        <member name="M:LateBindingHelper.LateBindingFacade.Set(System.String,System.Object)">
+            <summary>
+            Set an object property using Late Binding
+            </summary>
+            <param name="propertyName"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:LateBindingHelper.LateBindingFacade.CallOperation(System.String,System.Object[],System.Object@,System.Reflection.ParameterModifier,LateBindingHelper.LateBindingFacade.EOperationType)">
+            <summary>
+            Calls an operation of specifyed name, with arguments.
+            Operation in this context is any method or property in
+            an object
+            </summary>
+            <param name="operationName">
+            Name of operation to be called</param>
+            <param name="args">
+            Args for this operation call. Must be passed as an array of 
+            objects, or null if the method doesn't need arguments
+            </param>
+            <param name="retVal">
+            Object containing the operation return value, or null if 
+            method returns nothing.
+            The object must be casted by the user to the correct type
+            </param>
+            <param name="refParams">
+            Indicates if any of the arguments must be passed by reference 
+            </param>
+            <param name="type">
+            Value from <see cref="T:LateBindingHelper.LateBindingFacade.EOperationType"/> representing
+            the type of call we are making
+            </param>
+            <returns>
+            Bool if call was succesfull, false if some error ocurred. 
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Throwed if any argument is incorrect
+            </exception>
+            <exception cref="T:System.Exception">
+            Throwed if the call fails
+            </exception>
+        </member>
+        <member name="M:LateBindingHelper.LateBindingFacade.CallOperation(System.String,System.Object[],System.Object@,LateBindingHelper.LateBindingFacade.EOperationType)">
+            <summary>
+            Calls an operation of specifyed name, with arguments.
+            Operation in this context is any method or property in
+            an object
+            </summary>
+            <param name="operationName">Name of operation to be called</param>
+            <param name="args">Args for this operation call. Must be passed as an array of
+            objects, or null if the method doesn't need arguments</param>
+            <param name="retVal">Object containing the operation return value, or null if
+            method returns nothing.
+            The object must be casted by the user to the correct type</param>
+            <param name="operationType">Type of the operation.</param>
+            <returns>
+            Bool if call was succesfull, false if some error ocurred.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Throwed if any argument is incorrect
+            </exception>
+            <exception cref="T:System.Exception">
+            Throwed if the call fails
+            </exception>
+        </member>
+        <member name="M:LateBindingHelper.LateBindingFacade.ComputeBindingFlags(LateBindingHelper.LateBindingFacade.EOperationType)">
+            <summary>
+            Generates the correct bindingFlag necessary for a late binding call
+            given an <see cref="T:LateBindingHelper.LateBindingFacade.EOperationType"/> type.
+            </summary>
+            <param name="type">
+            <see cref="T:LateBindingHelper.LateBindingFacade.EOperationType"/> type
+            </param>
+            <returns>
+            Correct binding flags for that type call, added to
+            BindingFlags.Public | BindingFlags.Static flags
+            </returns>
+        </member>
+        <member name="F:LateBindingHelper.LateBindingFacade._instance">
+            <summary>
+            Automatión object necessary for late binding
+            </summary>
+        </member>
+        <member name="M:LateBindingHelper.LateBindingFacade.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>.
+            </summary>
+            <param name="obj">The <see cref="T:System.Object"/> to compare with the current <see cref="T:System.Object"/>.</param>
+            <returns>
+            true if the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>; otherwise, false.
+            </returns>
+            <exception cref="T:System.NullReferenceException">The <paramref name="obj"/> parameter is null.</exception>
+        </member>
+        <member name="M:LateBindingHelper.LateBindingFacade.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type.
+            </summary>
+            <returns>
+            A hash code for the current <see cref="T:System.Object"/>.
+            </returns>
+        </member>
+        <member name="P:LateBindingHelper.LateBindingFacade.AvailableOperations">
+            <summary>
+            Returns a string with the possible
+            operations this class is capable of call
+            </summary>
+        </member>
+        <member name="T:LateBindingHelper.LateBindingFacade.EOperationType">
+            <summary>
+            Establish the type of binding that 
+            .NET must perform on an late binding call
+            </summary>
+        </member>
+        <member name="F:LateBindingHelper.LateBindingFacade.EOperationType.METHOD">
+            <summary>
+            The operation calls a method
+            </summary>
+        </member>
+        <member name="F:LateBindingHelper.LateBindingFacade.EOperationType.PROPERTY_GET">
+            <summary>
+            The operation sets the value for a property
+            </summary>
+        </member>
+        <member name="F:LateBindingHelper.LateBindingFacade.EOperationType.PROPERTY_SET">
+            <summary>
+            The operation retrieves a value for a property
+            </summary>
+        </member>
+        <member name="F:LateBindingHelper.LateBindingFacade.EOperationType.FIELD_GET">
+            <summary>
+            The operation gets the value for a field
+            </summary>
+        </member>
+        <member name="F:LateBindingHelper.LateBindingFacade.EOperationType.FIELD_SET">
+            <summary>
+            The operation sets the value for a field
+            </summary>
+        </member>
+    </members>
+</doc>
