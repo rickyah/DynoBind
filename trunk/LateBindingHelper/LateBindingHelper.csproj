@@ -37,6 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Args.cs" />
+    <Compile Include="EOperationType.cs" />
     <Compile Include="ILateBindingFacade.cs" />
     <Compile Include="LateBindingFacade.cs" />
     <Compile Include="ErrorStrings.Designer.cs">
