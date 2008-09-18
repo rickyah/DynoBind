@@ -118,6 +118,19 @@ namespace LateBindingHelper
         }
 
         /// <summary>
+        /// Calls an operation over an object using Late Binding.
+        /// </summary>
+        /// <param name="methodName">Name of the method to be invoked</param>
+        /// <remarks>
+        /// This method call does not return a value, even if the method invoked
+        /// using late binding does.
+        /// </remarks>
+        public void Call(string methodName)
+        {
+            Call(methodName, null);
+        }
+
+        /// <summary>
         /// Calls an late binding object method using Late Binding.
         /// </summary>
         /// <remarks>
@@ -168,6 +181,23 @@ namespace LateBindingHelper
                 out retVal,
                 refParams,
                 EOperationType.METHOD);
+        }
+
+        /// <summary>
+        /// Calls an object method, which returns a value, using Late Binding.
+        /// </summary>
+        /// <typeparam name="T">Type of the data returned by the method.</typeparam>
+        /// <param name="methodName">Name of the method to be invoked.</param>
+        /// <returns>
+        /// The return value of the operation casted to the type parameter T
+        /// </returns>
+        /// <remarks>
+        /// If the invoked method does not originally returned a value,
+        /// then a default(T) value is returned by this method.
+        /// </remarks>
+        public T Call<T>(string methodName)
+        {
+            return Call<T>(methodName, null);
         }
 
         /// <summary>
@@ -605,6 +635,7 @@ namespace LateBindingHelper
             return this._instance.GetHashCode();
         }
         #endregion
+
     }
 
 }
