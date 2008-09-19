@@ -155,9 +155,12 @@ namespace LateBindingHelper.UnitTests
             }
 
             //Needed to get the type of the enumeration 
-            Type enumType = Assembly.LoadWithPartialName("Microsoft.Office.Interop.Word").GetType("Microsoft.Office.Interop.Word.WdSaveOptions", false);
+            //Type enumType = Assembly.LoadWithPartialName("Microsoft.Office.Interop.Word").GetType("Microsoft.Office.Interop.Word.WdSaveOptions", false);
+            //word.Call("Quit", Activator.CreateInstance(enumType)));
 
-            word.Call("Quit", Args.Build(Activator.CreateInstance(enumType)));
+            //But if we now the equivalent int it could work
+            //WdSaveOptions.wdDoNotSaveChanges == 0
+            word.Call("Quit", Args.Build(0));
         }
         #endregion
     }
