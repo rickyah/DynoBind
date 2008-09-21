@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LateBindingHelper", "LateBindingHelper\LateBindingHelper vs2008.csproj", "{FFCCEF86-FE12-42A5-A3B3-18F54FFD8CCD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LateBindingHelper.TestClass", "LateBindingHelper.TestClass\LateBindingHelper.TestClass vs2008.csproj", "{1DD792E6-0536-4516-B737-966EEA48728E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LateBindingHelper.UnitTests", "LateBindingHelper.UnitTests\LateBindingHelper.UnitTests vs2008.csproj", "{6EAA9502-AE47-43C5-8BA4-31FF5C6058E8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FFCCEF86-FE12-42A5-A3B3-18F54FFD8CCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFCCEF86-FE12-42A5-A3B3-18F54FFD8CCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFCCEF86-FE12-42A5-A3B3-18F54FFD8CCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFCCEF86-FE12-42A5-A3B3-18F54FFD8CCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DD792E6-0536-4516-B737-966EEA48728E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DD792E6-0536-4516-B737-966EEA48728E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DD792E6-0536-4516-B737-966EEA48728E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DD792E6-0536-4516-B737-966EEA48728E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EAA9502-AE47-43C5-8BA4-31FF5C6058E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EAA9502-AE47-43C5-8BA4-31FF5C6058E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EAA9502-AE47-43C5-8BA4-31FF5C6058E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EAA9502-AE47-43C5-8BA4-31FF5C6058E8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
