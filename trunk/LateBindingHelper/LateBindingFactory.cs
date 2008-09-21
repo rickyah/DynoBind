@@ -46,7 +46,7 @@ namespace LateBindingHelper
        /// <summary>
         /// Creates a <see cref="ILateBindingFacade"/> instance binded to a new instance of a type.
         /// </summary>
-        public static ILateBindingFacade CrateAutomationLateBinding(string objectName)
+        public static ILateBindingFacade CreateAutomationLateBinding(string objectName)
         {
             if (objectName == null || objectName == string.Empty)
                 throw new ArgumentNullException("Invalid object name.");

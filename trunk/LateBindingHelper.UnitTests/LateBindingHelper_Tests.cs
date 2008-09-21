@@ -137,7 +137,7 @@ namespace LateBindingHelper.UnitTests
         [Test]
         public void WordAutomationTest_NotReallyATestUnit()
         {
-            ILateBindingFacade word = LateBindingFactory.CrateAutomationLateBinding("Word.Application");
+            ILateBindingFacade word = LateBindingFactory.CreateAutomationLateBinding("Word.Application");
             
 
             ILateBindingFacade wordDoc = word.Get<ILateBindingFacade>("Documents").Call<ILateBindingFacade>("Add");

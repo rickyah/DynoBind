@@ -1,1 +1,11 @@
- 
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="LateBindingHelper.LateBindingFactory">
+    <Position X="1.25" Y="1.25" Width="2.75" />
+    <TypeIdentifier>
+      <FileName>LateBindingFactory.cs</FileName>
+      <HashCode>AAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+</ClassDiagram>
