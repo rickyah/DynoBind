@@ -4,7 +4,6 @@ using System.Text;
 using System.Reflection;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using LateBindingHelper_2008;
 
 namespace LateBindingHelper
 {

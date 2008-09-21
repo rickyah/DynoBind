@@ -38,15 +38,18 @@
   <ItemGroup>
     <Compile Include="Args.cs" />
     <Compile Include="EOperationType.cs" />
-    <Compile Include="ILateBindingFacade.cs" />
-    <Compile Include="LateBindingFacade.cs" />
     <Compile Include="ErrorStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ErrorStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="ILateBindingFacade.cs" />
+    <Compile Include="LateBindingFacade.cs" />
     <Compile Include="LateBindingFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ErrorStrings.resx">

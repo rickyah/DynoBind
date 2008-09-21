@@ -41,7 +41,7 @@ namespace LateBindingHelper.UnitTests
         [SetUp]
         public void SetUp()
         {
-            _lateBindingFacade = LateBindingFactory.CreateBinding(typeof(MyLateBindingTestType), Args.Build(27) );
+            _lateBindingFacade = LateBindingFactory.CreateObjectLateBinding(typeof(MyLateBindingTestType), Args.Build(27) );
         }
 
         [TearDown]
@@ -137,7 +137,7 @@ namespace LateBindingHelper.UnitTests
         [Test]
         public void WordAutomationTest_NotReallyATestUnit()
         {
-            ILateBindingFacade word = LateBindingFactory.CrateAutomationBinding("Word.Application");
+            ILateBindingFacade word = LateBindingFactory.CrateAutomationLateBinding("Word.Application");
             
 
             ILateBindingFacade wordDoc = word.Get<ILateBindingFacade>("Documents").Call<ILateBindingFacade>("Add");
