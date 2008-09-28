@@ -51,7 +51,7 @@ namespace LateBindingHelper
             if (objectName == null || objectName == string.Empty)
                 throw new ArgumentNullException("Invalid object name.");
 
-            Type objectType = Type.GetTypeFromProgID("Word.Application");
+            Type objectType = Type.GetTypeFromProgID(objectName);
             return new LateBindingFacade( Activator.CreateInstance(objectType) );
         }
     }
