@@ -90,7 +90,7 @@ namespace LateBindingHelper.Tests
             int refValue = 10;
             object tmp = refValue;
 
-            _lateBindingFacade.Method("MulFiveRef").AddParameter(ref tmp).Invoke();
+            _lateBindingFacade.Method("MulFiveRef").AddRefParameter(tmp).Invoke();
 
             refValue = (int) _lateBindingFacade.LastCallParameters[0];
 
@@ -107,8 +107,8 @@ namespace LateBindingHelper.Tests
 
             _lateBindingFacade
                 .Method("MulTenRef")
-                .AddParameter(ref args[0])
-                .AddParameter(ref args[1])
+                .AddRefParameter(args[0])
+                .AddRefParameter(args[1])
                 .Invoke();
 
             refValue1 = (int)_lateBindingFacade.LastCallParameters[0];
