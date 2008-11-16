@@ -26,7 +26,7 @@ namespace LateBindingHelper
         /// <returns>
         /// A reference to the object which made this operation
         /// </returns>
-        IMethodInvoker AddParameter(ref object value);
+        IMethodInvoker AddRefParameter(object value);
 
         /// <summary>
         /// Performs the call to the method defined by a previous <see cref="IMethodAccessor.Method"/>
