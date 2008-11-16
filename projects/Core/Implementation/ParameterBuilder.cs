@@ -18,7 +18,7 @@ namespace LateBindingHelper.Implementation
             return this;
         }
 
-        public IParameterBuilder AddParameter(ref object value)
+        public IParameterBuilder AddRefParameter(object value)
         {
 
             _parameters.Add(value);
