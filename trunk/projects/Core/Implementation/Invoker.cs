@@ -110,9 +110,9 @@ namespace LateBindingHelper.Implementation
         /// <returns>
         /// A reference to the object which made this operation
         /// </returns>
-        public IMethodInvoker AddParameter(ref object value)
+        public IMethodInvoker AddRefParameter(object value)
         {
-            InnerParameterBuilder.AddParameter(ref value);
+            InnerParameterBuilder.AddRefParameter(value);
 
             return this;
         }
