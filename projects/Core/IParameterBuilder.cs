@@ -6,7 +6,7 @@ namespace LateBindingHelper
 {
     public interface IParameterBuilder
     {
-        IParameterBuilder AddParameter(ref object value);
+        IParameterBuilder AddRefParameter(object value);
 
         IParameterBuilder AddParameter(object value);
 
