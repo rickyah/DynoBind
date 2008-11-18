@@ -66,7 +66,7 @@
     <Compile Include="IFieldAccessor.cs" />
     <Compile Include="IGetSetInvoker.cs" />
     <Compile Include="IIndexerAccessor.cs" />
-    <Compile Include="IInvoker.cs" />
+    <Compile Include="IOperationInvoker.cs" />
     <Compile Include="IMethodAccessor.cs" />
     <Compile Include="Implementation\CommonLateBindingCalls.cs" />
     <Compile Include="Implementation\Invoker.cs" />

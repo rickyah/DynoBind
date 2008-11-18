@@ -15,7 +15,7 @@ namespace LateBindingHelper.Implementation
     /// <summary>
     /// Implementation for IInvoker
     /// </summary>
-    internal class Invoker : IInvoker
+    internal class Invoker : IOperationInvoker
     {
         #region Constructor
 
