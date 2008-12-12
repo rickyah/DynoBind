@@ -14,7 +14,7 @@ When this code is build the C# compiler checks if the calculator object instance
 All of this is possible because the compiler has information about the calculator object instance type.
 
 But, what if we don't have that information? 
-That could happen with interop scenarios (e.g. getting a COM object which exists outside the .NET Framework, Maybe we have the specs defining the operations the object exports, but we can have the compiler reference that information).
+That could happen with interop scenarios (e.g. getting a COM object which exists outside the .NET Framework, Maybe we have the specs defining the operations the object exports, but we can't have the compiler reference that information).
 How do we made calls if the compiler doesn't have that information?
 That's where the _late binding_ calls make their appearance. 
 
