@@ -43,8 +43,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>
-    </DocumentationFile>
+    <DocumentationFile>bin\Release\LateBindingHelper.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -69,7 +68,7 @@
     <Compile Include="IOperationInvoker.cs" />
     <Compile Include="IMethodAccessor.cs" />
     <Compile Include="Implementation\CommonLateBindingCalls.cs" />
-    <Compile Include="Implementation\Invoker.cs" />
+    <Compile Include="Implementation\OperationInvoker.cs" />
     <Compile Include="Implementation\ParameterBuilder.cs" />
     <Compile Include="IMethodInvoker.cs" />
     <Compile Include="IParameterBuilder.cs" />
