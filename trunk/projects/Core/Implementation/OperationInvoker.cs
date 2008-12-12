@@ -15,7 +15,7 @@ namespace LateBindingHelper.Implementation
     /// <summary>
     /// Implementation for IInvoker
     /// </summary>
-    internal class Invoker : IOperationInvoker
+    internal class OperationInvoker : IOperationInvoker
     {
         #region Constructor
 
@@ -23,7 +23,7 @@ namespace LateBindingHelper.Implementation
         /// Creates a new instance of the type Invoker
         /// </summary>
         /// <param name="invocationObject">object where the late binding calls will be made</param>
-        internal Invoker(object invocationObject)
+        internal OperationInvoker(object invocationObject)
         {
             InstanceObject = invocationObject;
         }
@@ -51,7 +51,7 @@ namespace LateBindingHelper.Implementation
         /// <param name="fieldName">String with the name of the field to be invoked</param>
         /// <returns> 
         /// An <see cref="IGetSetInvoker"/> that will establish the operation to
-        /// perform over the field specifyed by the <param name="fieldName">fieldName</param>
+        /// perform over the field specifyed by the <paramref name="fieldName">fieldName</paramref>
         /// </returns>
         public IGetSetInvoker Field(string fieldName)
         {
@@ -106,6 +106,7 @@ namespace LateBindingHelper.Implementation
 
         /// <summary>
         /// Adds a parameter to the method call, passed with reference semantics
+        /// </summary>
         /// <param name="value">object to be passed as parameter</param>
         /// <returns>
         /// A reference to the object which made this operation
@@ -155,7 +156,7 @@ namespace LateBindingHelper.Implementation
                 ParameterModifier refParams = new ParameterModifier(args.Length);
                 for (int i = 0; i < args.Length; ++i)
                 {
-                    refParams[i] = InnerParameterBuilder.ISReferenceParameter[i];
+                    refParams[i] = InnerParameterBuilder.GetReferenceParameterList()[i];
                 }
 
                 CommonLateBindingOperations.CallOperation(
@@ -213,7 +214,7 @@ namespace LateBindingHelper.Implementation
         /// <param name="propertyName">String with the name of the property to be invoked</param>
         /// <returns> 
         /// An <see cref="IGetSetInvoker"/> that will establish the operation to
-        /// perform over the property specifyed by the <param name="propertyName">property name</param>
+        /// perform over the property specifyed by the <paramref name="propertyName">property name</paramref>
         /// </returns>
         public IGetSetInvoker Property(string propertyName)
         {
@@ -343,6 +344,7 @@ namespace LateBindingHelper.Implementation
         /// Performs indexer access over a type.
         /// </summary>
         /// <param name="index">object used as indexer</param>
+        /// <returns>
         /// An <see cref="IGetSetInvoker"/> that will establish the operation to
         /// perform over the specifyed index.
         /// </returns>
