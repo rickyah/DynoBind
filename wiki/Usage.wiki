@@ -22,98 +22,157 @@ That implies that no type checks can be performed at compile time using late bin
 
 = Details =
 
-All late binding functionality is based on the interface 'LateBindingHelper.ILateBindingFacade'
+All late binding functionality is based on the interface 'LateBindingHelper.IOperationInvoker'
 
-Adquisition of 'ILateBinding' interfaces is done using a Factory static class:
-The 'LateBindingFactory.CreateObjectBinding' allows creation of a 'ILateBindingFacade' given an instance of an object, or using the 'System.Type' for the object:
+Adquisition of 'IOperationInvoker' interfaces is done using a Factory static class: 'LateBindingHelper.BindingFactory' which allows creation of an 'IOperationInvoker' binded to an object instance, using various possibilities:
+	Using an instance of an object as a "prototype" 
+	Using a 'System.Type' to create a new instance of the Type at runtip (optionally arguments for the constructor can be also specified)
+	Using strings defining the Assembly and the Type of the object instance.
+	Using an string which defines an specific application ProccessID
+E.g:
 {{{
 MyClass myClassInstance = new MyClass();
 
 //Late Binding calls will be dispatched to the myClassInstance object
-
-ILateBindingFactory lbf1 = LateBindingFactory.CreateObjectLateBinding( myClassInstance );
+IOperationInvoker lbf1 = BindingFactory.CreateObjectBinding( myClassInstance );
 
 //Creates a new MyClass object instance where the late binding call will be dispatched 
 //using the default constructor
-ILateBindingFactory lbf2 = LateBindingFactory.CreateObjectLateBinding( typeof(MyClass) );
+IOperationInvoker lbf2 = BindingFactory.CreateObjectBinding( typeof(MyClass) );
 
 int integerArgument = 2008;
 //Creates a new MyClass object instance where the late binding call will be dispatched passing
 //arguments to the constructor
-ILateBindingFactory lbf3 = LateBindingFactory.CreateObjectLateBinding( typeof(MyClass),  integerArgument );
+IOperationInvoker lbf3 = BindingFactory.CreateObjectBinding( typeof(MyClass),  integerArgument );
 }}}
 
-The 'LateBindingObject.CreateAutomationLateBinding(') factory makes a binding to an Automation aplication given its Running Object Table (ROT) name:
+'BindingFactory.CreateAutomationBinding()' factory makes a binding to an Automation application given its Running Object Table (ROT) name
+or ProcID:
 {{{
-ILateBindingFactory word = LateBindingFactory.CreateAutomationLateBinding("word.application");
+IOperationInvoker word = BindingFactory.CreateAutomationBinding("word.application");
 }}}
 
-Once we have an instance of an ILateBindingFacade inteface, we can send any operation we want 
-to the object using late binding:
+Once we have an instance of an IOperationInvoker interface, we can send any operation we want 
+to the object using the interface, and the operation will be issued at runtime:
 
-* Call a method:
+* Calling a method:
 
 {{{
 //Method call without parameters and no return value
-myLateBindingFacade.Call("Method1");
+myLBInvoker
+	.Method("Method1")
+	.Invoke();
 
 //Method call with parameters and no return value (or we don't need the return value)
 int arg1 = 1;
 double arg2 = 2.3;
-myLateBindingFacade.Call( "Method2", Args.Build(arg1, arg2) );
+myLBInvoker
+	.Method( "Method2" )
+	.AddParameter(arg1)
+	.AddParameter(arg2)
+	.Invoke();
 
-//Method call without parameters and a return value
+//Method call without parameters and a return value of type int
 int result;
-result = myLateBindingFacade.Call<int>("Method3");
-result = (int)myLateBindingFacade.Call<object>("Method3");
+result = myLBInvoker
+			.Method("Method3")
+			.Invoke<int>();
 
-//Method call with parameters and a return value
+//Or with explicit casting			
+result = (int)myLBInvoker.Method("Method3")
+			.Invoke<object>()			
+			
+
+//Method call with parameters and a return value of type int
 int result;
 int arg1 = 1;
 double arg2 = 2.3;
-result = myLateBindingFacade.Call<int>("Method2", Args.Build(arg1, arg2));
-result = (int)myLateBindingFacade.Call<object>("Method2", Args.Build(arg1, arg2));
+result = myLBInvoker
+			.Method("Method2")
+			.AddParameter(arg1)
+			.AddParameter(arg2))
+			.Invoke<int>()
+
+//Or with explicit casting			
+result = (int)myLBInvoker.Method("Method2")
+			.AddParameter(arg1)
+			.AddParameter(arg2))
+			.Invoke<object>()
 }}}
 
-* Call a method with reference parameters:
+* Calling a method with reference parameters:
 {{{
-int refParam = 10;
+int refValue = 10;
 double notRefParam1 = 20;
 bool notRefParam2 = true;
 
-//Save the arguments
-object[] args = Args.Build(notRefparam1, notRefParam2, refValue);
-
 //Make the call. Args.ByRefIndexs indicates the index number of the arguments
 //which are passed as reference
-myLateBindingFacade.Call("MultiplyByFive", Args.ByRefIndexs(2), args);
+myLBInvoker
+	.Method("MultiplyByFive")
+	.AddParameter(notRefParam1)
+	.AddParameter(notRefParam2)
+	.AddRefParameter(refValue)
+	.Invoke();
 
 //Recover the new value for the parameter passed by reference
-refValue = (int)args[2];
+refValue = (int)myLBInvoker.LastCallParameters[2];
 }}}
 
-* Property or field access:
+* Accessing Properties or fields:
 {{{
 //Get property value
 bool boolResult;
-boolResult = myLateBindingFacade.Get<bool>("Property1");
-boolResult = (bool)myLateBindingFacade.Get("Property1");
+boolResult = myLBInvoker
+		.Property(("Property1")
+		.Get<bool>();
+
+//With explicit cast
+boolResult = (bool)myLBInvoker
+			.Property("Property1")
+			.Get<object>();
 
 //Get field value
 int intResult;
-intResult = myLateBindingFacade.Get<int>("field1");
-intResult = (int)myLateBindingFacade.Get("field1");
+intResult = myLBInvoker
+		.Field("field1")
+		.Get<int>();
+			
+//With explicit cast
+intResult = (int)myLBInvoker
+			.Field("field1")
+			.Get<object>();
 
 //Set property value
-myLateBindingFacade.Set("Property1", true);
+myLBInvoker
+	.Property("Property1")
+	.Set(true);
 
 //Set field value
-myLateBindingFacade.Set("field1", 10);
+myLBInvoker
+	.Field("field1")
+	.Set(10);
 }}}
 
 * Index accessing or assignament:
 {{{
+
+//Get object at index position
 string result;
-result = myLateBindingFacade.GetIndex<string>(5);
-myLateBindingFacade.SetIndex(4, "[myNewValue]");
+result = myLBInvoker
+		.Index(5)
+		.Get<string>();
+			
+//Set value for an index position
+myLBInvoker
+	.Index(4)
+	.Set("[myNewValue]");
+	
+//Works with any object as indexer:
+result = myLBInvoker
+		.Index("myStringIndexer")
+		.Get<string>();
+myLBInvoker
+	.Index("anotherStringIndexer")
+	.Set("[myNewValue]");
 }}}
