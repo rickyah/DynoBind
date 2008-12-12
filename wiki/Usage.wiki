@@ -26,9 +26,9 @@ That implies that no type checks can be performed at compile time using late bin
 
 = Using the library =
 
-All late binding functionality is based on the interface 'LateBindingHelper.IOperationInvoker'
+All late binding functionality is based on the interface  `LateBindingHelper.IOperationInvoker`
 
-Adquisition of 'IOperationInvoker' interfaces is done using a Factory static class: 'LateBindingHelper.BindingFactory' which allows creation of an 'IOperationInvoker' binded to an object instance, using various possibilities:
+Adquisition of `IOperationInvoker` interfaces is done using a Factory static class: `LateBindingHelper.BindingFactory` which allows creation of an `IOperationInvoker` binded to an object instance, using various possibilities:
 	Using an instance of an object as a "prototype" 
 	Using a 'System.Type' to create a new instance of the Type at runtip (optionally arguments for the constructor can be also specified)
 	Using strings defining the Assembly and the Type of the object instance.
@@ -59,7 +59,7 @@ IOperationInvoker word = BindingFactory.CreateAutomationBinding("word.applicatio
 Once we have an instance of an IOperationInvoker interface, we can send any operation we want 
 to the object using the interface, and the operation will be issued at runtime:
 
-* Calling a method:
+== Calling a method ==
 
 {{{
 //Method call without parameters and no return value
@@ -85,7 +85,6 @@ result = myLBInvoker
 //Or with explicit casting			
 result = (int)myLBInvoker.Method("Method3")
 			.Invoke<object>()			
-			
 
 //Method call with parameters and a return value of type int
 int result;
@@ -104,7 +103,7 @@ result = (int)myLBInvoker.Method("Method2")
 			.Invoke<object>()
 }}}
 
-* Calling a method with reference parameters:
+== Calling a method with reference parameters ==
 {{{
 int refValue = 10;
 double notRefParam1 = 20;
@@ -123,7 +122,7 @@ myLBInvoker
 refValue = (int)myLBInvoker.LastCallParameters[2];
 }}}
 
-* Accessing Properties or fields:
+== Accessing Properties or fields ==
 {{{
 //Get property value
 bool boolResult;
@@ -158,7 +157,7 @@ myLBInvoker
 	.Set(10);
 }}}
 
-* Index accessing or assignament:
+== Index accessing or assignament ==
 {{{
 
 //Get object at index position
@@ -180,6 +179,22 @@ myLBInvoker
 	.Index("anotherStringIndexer")
 	.Set("[myNewValue]");
 }}}
+
+== One more thing: IOperationInvoker as return type ==
+You can use `IOperationInvoker` as a return type for an operation, and if you do
+so, you'll receive an working instance of an object defining the `IOperationInvoker` interface. That means that you can concatenate late binding call on different objects:
+{{{
+IOperationInvoker yetAnotherOrdersManager = BindingFactory.CreateBinding("MyOrdersManager");
+
+
+int firstOrderID = yetAnotherOrdersManager 
+          .Property("Orders")
+          .Get<IOperationInvoker>()       //Here we return a list of orders
+             .Index(0)                    
+             .Get<IOperationInvoker>()    //We access the first order... hoping we have at least one order stored so no nasty exception is throw.
+                .Field("orderID")         
+                .Get<int>();              //Access orderID field and save it.
+}}
 
 = More examples =
 The code includes some test units that also serves as code use examples. 
