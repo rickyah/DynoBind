@@ -181,4 +181,4 @@ myLBInvoker
 	.Set("[myNewValue]");
 }}}
 
-The code includes some test units that also serves as code use examples. A test disabled by default also includes code for creating a binding to a Word and control the application with the library using Automation. The code is listed at Word_Automation_example 
+The code includes some test units that also serves as code use examples. A test disabled by default also includes code for creating a binding to a Word and control the application with the library using Automation. The code is also listed in the following wiki page: Word_Automation_example 
