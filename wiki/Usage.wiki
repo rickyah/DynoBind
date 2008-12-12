@@ -20,7 +20,9 @@ With a late binding call, the binding to the actual code -searching for the oper
 
 That implies that no type checks can be performed at compile time using late binding calls as we did't have type information in first place. As a consequence, if we call an operation in a object instance using late bindind and no operation matching signature is found, a failure will occur, but the important thing to remember is that *it will show up at runtime*
 
-= Details =
+
+
+= Using the library =
 
 All late binding functionality is based on the interface 'LateBindingHelper.IOperationInvoker'
 
@@ -176,3 +178,5 @@ myLBInvoker
 	.Index("anotherStringIndexer")
 	.Set("[myNewValue]");
 }}}
+
+The code includes some test units that also serves as code use examples. A test disabled by default also includes code for creating a binding to a Word and control the application with the library using Automation.
