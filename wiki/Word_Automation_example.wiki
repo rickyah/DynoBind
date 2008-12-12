@@ -29,6 +29,11 @@ foreach (char c in str)
 	System.Threading.Thread.Sleep(200);
 }
 
+//Hide Word
+bool visibility = wordApp.Property("Visible").Get<bool>();
+visibility = !visibility;
+wordApp.Property("Visible").Set(visibility);
+
 //We need to get the type of the enumeration, that breaks the Late Binding approach as we need
 //a way to know a specific type, and it's aseembly
 //Type enumType = Assembly
@@ -38,11 +43,6 @@ foreach (char c in str)
 
 //But if we know the equivalent int to the enum value it will work
 //WdSaveOptions.wdDoNotSaveChanges == 0
-
-//Hide Word
-bool visibility = wordApp.Property("Visible").Get<bool>();
-visibility = !visibility;
-wordApp.Property("Visible").Set(visibility);
 
 //Quit
 wordApp.Method("Quit").AddParameter(0).Invoke();
