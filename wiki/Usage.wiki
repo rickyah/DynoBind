@@ -4,7 +4,6 @@ With C#4.0 the *dynamic* keyword will be added so -with time- this library will 
 
 <wiki:toc max_depth="1" />
 
-
 = Introduction: Early binding & Late binding =
 
 In a early binding call we specify an operation and, if the signature for that operation is correct, the compiler binds the code for that operation at compile time. E.g:
@@ -182,4 +181,4 @@ myLBInvoker
 	.Set("[myNewValue]");
 }}}
 
-The code includes some test units that also serves as code use examples. A test disabled by default also includes code for creating a binding to a Word and control the application with the library using Automation.
+The code includes some test units that also serves as code use examples. A test disabled by default also includes code for creating a binding to a Word and control the application with the library using Automation. The code is listed at Word_Automation_example 
