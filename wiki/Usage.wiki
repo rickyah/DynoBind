@@ -30,10 +30,10 @@ All late binding functionality is based on the interface  `LateBindingHelper.IOp
 
 Adquisition of `IOperationInvoker` interfaces is done using a Factory static class: `LateBindingHelper.BindingFactory` which allows creation of an `IOperationInvoker` binded to an object instance, using various possibilities:
 
- Using an instance of an object as a "prototype" 
- Using a 'System.Type' to create a new instance of the Type at runtip (optionally arguments for the constructor can be also specified)
- Using strings defining the Assembly and the Type of the object instance.
- Using an string which defines an specific application ProccessID
+  * Using an instance of an object as a "prototype" 
+  *Using a 'System.Type' to create a new instance of the Type at runtip (optionally arguments for the constructor can be also specified)
+  * Using strings defining the Assembly and the Type of the object instance.
+  * Using an string which defines an specific application ProccessID
 
 E.g:
 {{{
