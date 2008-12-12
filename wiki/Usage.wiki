@@ -194,7 +194,7 @@ int firstOrderID = yetAnotherOrdersManager
              .Get<IOperationInvoker>()    //We access the first order... hoping we have at least one order stored so no nasty exception is throw.
                 .Field("orderID")         
                 .Get<int>();              //Access orderID field and save it.
-}}
+}}}
 
 = More examples =
 The code includes some test units that also serves as code use examples. 
