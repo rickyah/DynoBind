@@ -145,8 +145,8 @@ intResult = myLBInvoker
 			
 //With explicit cast
 intResult = (int)myLBInvoker
-			.Field("field1")
-			.Get<object>();
+		.Field("field1")
+		.Get<object>();
 
 //Set property value
 myLBInvoker
@@ -165,8 +165,8 @@ myLBInvoker
 //Get object at index position
 string result;
 result = myLBInvoker
-		.Index(5)
-		.Get<string>();
+	.Index(5)
+	.Get<string>();
 			
 //Set value for an index position
 myLBInvoker
@@ -175,8 +175,8 @@ myLBInvoker
 	
 //Works with any object as indexer:
 result = myLBInvoker
-		.Index("myStringIndexer")
-		.Get<string>();
+	.Index("myStringIndexer")
+	.Get<string>();
 myLBInvoker
 	.Index("anotherStringIndexer")
 	.Set("[myNewValue]");
