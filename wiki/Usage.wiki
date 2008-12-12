@@ -1,5 +1,6 @@
 #labels Featured
-This library aims to simplify late binding calls in C#, which are utterly . 
+This library aims to simplify late binding calls in C#, which are painfully complex in C# specially if we compare it with how VB.NET handles late binding calls.
+With C#4.0 the *dynamic* keyword will be added so -with time- this library will be deprecated. But C# 4.0 isn't out yet, and even when it comes out, there will be still  a lot of projects using previous versions of the language which can benefit from this library.
 
 = Introduction: Early binding & Late binding =
 
@@ -7,14 +8,17 @@ In a early binding call we specify an operation and, if the signature for that o
 {{{
 int result = calculator.Add( 15, 16 )
 }}}
-When this code is build, the C# compiler looks if the calculator object instance defines an operation with the name 'Add', that takes 2 integers as parameters, and returns  another integer. If the operation with that concrete signature is found for the calculator object, the compiler _binds_ that call to the actual code which performs the operation. Otherwise a compile-time error is issued as the compiler cant find an operation matching that signature.
-This is possible, because the compiler has information about the class which the calculator object instance belongs.
-But, what if we don't have that information? That could happen in interop scenarios (e.g. getting a COM object which exists outside the .NET Framework) Maybe we have the specs defining the operations the object exports, but we can have the compiler reference that information. How do we made calls if the compiler doesn't have that information?
+When this code is build the C# compiler checks if the calculator object instance defines an operation with the name 'Add', that takes 2 integers as parameters, and returns  another integer. If the operation with that concrete signature is found for the calculator object, the compiler _binds_ that call to the actual code which performs the operation. Otherwise a compile-time error is issued as the compiler can't find an operation matching that signature.
+All of this is possible because the compiler has information about the calculator object instance type.
 
-Thats where the _late binding_ calls make their appearance. 
-With a late binding call, the bind to the actual code is posponed 
+But, what if we don't have that information? 
+That could happen with interop scenarios (e.g. getting a COM object which exists outside the .NET Framework, Maybe we have the specs defining the operations the object exports, but we can have the compiler reference that information).
+How do we made calls if the compiler doesn't have that information?
+That's where the _late binding_ calls make their appearance. 
 
-This also implies that no type checks can be performed at compile time using late binding calls (there 
+With a late binding call, the binding to the actual code -searching for the operation with that signature- is postponed to runtime, when we have more information about the type.
+
+That implies that no type checks can be performed at compile time using late binding calls as we did't have type information in first place. As a consequence, if we call an operation in a object instance using late bindind and no operation matching signature is found, a failure will occur, but the important thing to remember is that *it will show up at runtime*
 
 = Details =
 
