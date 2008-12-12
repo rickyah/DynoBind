@@ -2,6 +2,9 @@
 This library aims to simplify late binding calls in C#, which are painfully complex in C# specially if we compare it with how VB.NET handles late binding calls.
 With C#4.0 the *dynamic* keyword will be added so -with time- this library will be deprecated. But C# 4.0 isn't out yet, and even when it comes out, there will be still  a lot of projects using previous versions of the language which can benefit from this library.
 
+<wiki:toc max_depth="1" />
+
+
 = Introduction: Early binding & Late binding =
 
 In a early binding call we specify an operation and, if the signature for that operation is correct, the compiler binds the code for that operation at compile time. E.g:
