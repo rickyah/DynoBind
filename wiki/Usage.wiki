@@ -28,7 +28,7 @@ That implies that no type checks can be performed at compile time using late bin
 
 All late binding functionality is based on the interface  `LateBindingHelper.IOperationInvoker`
 
-Adquisition of `IOperationInvoker` interfaces is done using a Factory static class: `LateBindingHelper.BindingFactory` which allows creation of an `IOperationInvoker` binded to an object instance, using various possibilities:
+Adquisition of an `IOperationInvoker` interface is done using a Factory: `LateBindingHelper.BindingFactory` which allows creation of an `IOperationInvoker` binded to an object instance, using various possibilities:
 
   * Using an instance of an object as a "prototype" 
   *Using a 'System.Type' to create a new instance of the Type at runtip (optionally arguments for the constructor can be also specified)
