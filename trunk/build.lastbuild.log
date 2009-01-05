@@ -33,6 +33,7 @@ RepositoryCleanup:
 
 Clean:
 
+   [delete] Deleting directory 'D:\development\projects\CSharp\LateBindingHelper\output'.
 
 Get:
 
@@ -40,14 +41,14 @@ Get:
 
 IncreaseBuildNumber:
 
-  [version] Build number '2.1.5.8106'.
+  [version] Build number '2.1.5.8128'.
 
 UpdateVersionFile:
 
 
 GenerateGUID:
 
-   [script] Scanning assembly "hr1ptrxr" for extensions.
+   [script] Scanning assembly "_b4sbcq4" for extensions.
 
 RepositoryCleanup:
 
@@ -59,7 +60,7 @@ CommitDir:
 
 UpdateDataAssembly:
 
-  [version] Build number '2.1.5.8106'.
+  [version] Build number '2.1.5.8128'.
   [asminfo] Generated file 'D:\development\projects\CSharp\LateBindingHelper\shared\CommonProjectAssembly.cs'.
 
 RepositoryCleanup:
@@ -76,7 +77,7 @@ Compile:
  [solution] Starting solution build.
  [solution] Building 'MyLateBindingTestType' [debug] ...
  [solution] Building 'LateBindingHelper' [debug] ...
- [solution] LateBindingFactory.cs(80,27): Warning CS0618: 'System.Reflection.Assembly.LoadWithPartialName(string)' está obsoleto: 'This method has been deprecated. Please use Assembly.Load() instead. http://go.microsoft.com/fwlink/?linkid=14202'
+ [solution] LateBindingFactory.cs(85,27): Warning CS0618: 'System.Reflection.Assembly.LoadWithPartialName(string)' está obsoleto: 'This method has been deprecated. Please use Assembly.Load() instead. http://go.microsoft.com/fwlink/?linkid=14202'
 
 RunTests:
 
