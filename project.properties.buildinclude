@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- 
+	Defines global project properties
+	All directories are relative to the directory in which this file is located.
+-->
+<properties>
+
+	<property name="project.projectname" value="LateBindingHelper"/>
+
+	<!--  -->
+	<property name="project.sourcecontrol.useVCS" value="false" />
+	
+	<!-- 
+		Subversion repository source URI
+		
+		Requiered if project.sourcecontrol.useVCS is true
+		Ignored if project.sourcecontrol.useVCS is false
+	-->
+	<property name="project.sourcecontrol.URI" value=""/>
+
+	
+	<!-- 
+		Subversion repository user and password
+		
+		Both required if project.sourcecontrol.useVCS is true
+		Both ignored if project.sourcecontrol.useVCS is false
+	-->
+	<property name="project.sourcecontrol.user" value="" />
+	<property name="project.sourcecontrol.pass" value="" />	
+	
+	<!--
+		Miscelaneous project data
+		
+		Used to auto generate the common data assembly
+	-->
+	
+	<property name="project.company" value="RickyAH"/>
+	<property name="project.productname" value="LateBindingHelper"/>
+	<property name="project.description" value="A simple library for simplifying late binding calls in C#" />
+	<property name="project.copyright" value="(C) 2008"  />
+	<property name="project.trademark" value="" />
+	
+	
+	
+	<!-- Default file paths -->
+	
+	<!--
+		Project version file path
+			
+		Defaults to ${project.dir.source.shared}/build.number as the versioning file.
+	-->
+	<property name="project.filepath.versioning" value="default" />
+	
+	
+	<!--
+		Project guid file path
+			
+		Defaults to ${project.dir.source.shared}/build.number as the versioning file.
+	-->
+	<property name="project.filepath.guid" value="default" />	
+	
+	<!-- 
+		Project solution file path 
+		
+		The .sln extension is added automaticly
+		Defaults to  ${project.directory.source}/${project.name}.sln as the solution
+		filename, after removing the whitespaces in property ${project.name}
+	-->
+	<property name="project.filepath.solution" value="default" />
+	
+	<!-- 
+		Project unit test report filename 
+		
+		.html extension is added automaticly
+		Defaults to 'UnitTestsReport.html'
+	-->
+	<property name="project.filepath.tests-report" value="default" />
+	
+	<!--
+		Project common data assembly path
+		
+		The .cs extension is added automaticaly
+		Defaults to  ${project.directory.source.shared}/CommonProjectAssembly.cs
+		as the filename.
+	-->
+	<property name="project.filepath.data-assembly" value="default" />
+	
+	
+			
+</properties>
+
+

@@ -15,8 +15,6 @@ namespace LateBindingHelper
         /// <param name="indexName">object used as indexer</param>
         /// An <see cref="IGetSetInvoker"/> that will establish the operation to
         /// perform over the specifyed index.
-        /// <returns>
-        /// A reference to the object which made this operation
         /// </returns>
         IGetSetInvoker Index(object indexName);
     }

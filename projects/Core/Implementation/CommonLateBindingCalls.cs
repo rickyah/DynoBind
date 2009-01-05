@@ -13,13 +13,10 @@ namespace LateBindingHelper.Implementation
     internal static class CommonLateBindingOperations
     {
         /// <summary>
-        /// Calls an operation of specifyed name and arguments overn an object
+        /// Calls an operation of specifyed name, with arguments.
         /// Operation in this context is any method or property in
         /// an object
         /// </summary>
-        /// <param name="instanceObject">
-        /// Instance of the object receiving the operation
-        /// </param>
         /// <param name="operationName">
         /// Name of operation to be called</param>
         /// <param name="args">
@@ -99,9 +96,6 @@ namespace LateBindingHelper.Implementation
         /// Operation in this context is any method or property in
         /// an object
         /// </summary>
-        /// <param name="instanceObject">
-        /// Instance of the object receiving the operation
-        /// </param>
         /// <param name="operationName">Name of operation to be called</param>
         /// <param name="args">Args for this operation call. Must be passed as an array of
         /// objects, or null if the method doesn't need arguments</param>
@@ -213,7 +207,7 @@ namespace LateBindingHelper.Implementation
                 || typeof(IMethodInvoker).IsAssignableFrom(typeof(T))
                 || typeof(IIndexerAccessor).IsAssignableFrom(typeof(T)) )
                
-                return (T)(object)new OperationInvoker(retVal); //Ugly cast 
+                return (T)(object)new Invoker(retVal); //Ugly cast 
             else
                 return (T)retVal;
         }

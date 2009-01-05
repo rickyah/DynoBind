@@ -1,0 +1,30 @@
+<target name="LoadExternalFiles.Action">
+
+	<!-- Set the pattern for files used to load external -->
+	
+	<fileset id="externalFiles" failonempty="true">
+		<!-- File defining paths to external tools -->
+		<include name="${build-process.dir.includes}/*.buildinclude" />
+		
+		<!-- Include files in the same directory as the .build -->
+		<include name="${project::get-base-directory()}/*.buildinclude" />
+	</fileset>
+	
+	<echo message="[INFO] Including external files:" />
+	
+	<!-- Check if all the external files to be included really exist -->
+	<foreach item="File" property="currentFile">
+		<in>
+			<items refid="externalFiles" />
+		</in>
+		
+		<do>
+			<include buildfile="${currentFile}" verbose="false" />
+			<echo message=" -> ${path::get-file-name(currentFile)}" />
+		</do>
+	</foreach>
+	
+	<echo /> <!-- New line separator -->
+
+</target>
+	

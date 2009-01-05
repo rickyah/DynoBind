@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- 
+	Defines global tool paths 
+	
+-->
+<properties>
+
+	<!--
+		SUBVERSION path
+	-->
+	<property name="svn-binary-path" value="C:\Archivos de programa\VisualSVN Server\bin\" />
+
+
+	<!-- 
+		SANDCASTLE path
+	-->
+	<property name="sandcastle-path" value="" />
+		
+	<!-- 
+		SANDCASTLE help file builder
+	-->
+	<property name="sandcastle-help-file-builder-path" value="" />
+	
+</properties>

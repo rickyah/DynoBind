@@ -1,0 +1,54 @@
+<target name="Project.Checks">
+	<echo message=" --> Checking project properties..." />
+
+	<!-- Check if project name is defined -->
+	<if test="${ project::get-name() == '' }"> 
+		<fail message="[ERROR] Project name is not defined" />
+	</if>
+	
+	
+	<!-- Check if project properties are defined -->
+	<if test="${not property::exists('project.sourcecontrol.URI')}" >
+		<echo message="[ERROR] Project source control URI is not defined"/>
+		<fail message="Define a property called 'project.sourcecontrol.URI'" />
+
+	</if>
+	
+	<if test="${not property::exists('project.sourcecontrol.user')}" >
+		<echo message="[ERROR] Project source control user name not defined" />
+		<fail message="Define a property called 'project.sourcecontrol.user'" />
+
+	</if>
+	
+	<if test="${not property::exists('project.sourcecontrol.pass')}" >
+		<echo message="[ERROR] Project source control user password not defined" />
+		<fail message="Define a property called 'project.sourcecontrol.pass'" />
+
+	</if>
+	
+	<if test="${
+		not property::exists('project.configuration')
+		or property::get-value('project.configuration') == ''}" >
+		<echo message="[ERROR] Project build configuration is not defined or it's empty" />
+		<fail message="Define a property called 'project.configuration'" />
+		
+	</if>
+	
+	
+	<!-- Checks for VCS properties -->
+	<if test="${property::get-value('project.sourcecontrol.useVCS') == 'true'}">
+		<if test="${property::get-value('project.sourcecontrol.URI') == ''}" > 
+			<fail message="Project repository source URI is not defined" />
+		</if>
+		
+		<if test="${property::get-value('project.sourcecontrol.user') == ''}" > 
+			<fail message="Project repository user is not defined" />
+		</if>
+		
+		<if test="${property::get-value('project.sourcecontrol.pass') == ''}" > 
+			<fail message="Project repository user is not defined" />
+		</if>
+	</if>
+
+
+</target>

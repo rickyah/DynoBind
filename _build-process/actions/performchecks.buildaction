@@ -1,0 +1,35 @@
+<target name="PerformChecks.Action">
+	
+	<!-- Load all check files the pattern for files used to load external -->
+	<fileset id="checks.fileset" failonempty="false">
+		<include name="${build-process.dir.checks}/**/*.buildchecks" />
+	</fileset>
+
+	<choose>
+		
+		<when test="${ fileset::has-files('checks.fileset')}">
+		
+			<echo message="[INFO] Performing checks... " />
+		
+			<foreach item="File" property="currentCheckFile">
+			    <in>
+			        <items refid="checks.fileset" />
+			    </in>
+				
+			    <do>
+			        	<include buildfile="${currentCheckFile}" verbose="false" />
+			    </do>
+			</foreach>
+		</when>
+		
+		<otherwise>
+			<echo message="[INFO] No checks defined" />
+		</otherwise>
+		
+	</choose>
+	
+	
+	<!-- -->
+	<echo message="[OK] All checks passed" />
+	<echo />
+</target>
