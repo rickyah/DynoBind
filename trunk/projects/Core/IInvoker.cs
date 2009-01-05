@@ -8,7 +8,7 @@ namespace LateBindingHelper
     /// Implements an interface to perform operations over a type using
     /// late binding calls
     /// </summary>
-    public interface IInvoker : 
+    public interface IOperationInvoker : 
         IPropertyAccessor,
         IMethodInvoker,
         IMethodAccessor,

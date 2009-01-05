@@ -15,7 +15,7 @@ namespace LateBindingHelper
         /// <param name="propertyName">String with the name of the property to be invoked</param>
         /// <returns> 
         /// An <see cref="IGetSetInvoker"/> that will establish the operation to
-        /// perform over the property specifyed by the <paramref name="propertyName">property name</paramref>
+        /// perform over the property specifyed by the <param name="propertyName">property name</param>
         /// </returns>
         IGetSetInvoker Property(string propertyName);
     }

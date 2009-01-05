@@ -1,0 +1,832 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="skeleton-nant-build" default="Help">
+	
+	<description>Skeleton file for the build process</description>
+	
+
+	<!-- Set the targets that will be executed if the build success of fails -->
+	<property name="nant.onsuccess" value="Success" />
+	<property name="nant.onfailure" value="Failure" />
+
+	<!-- Set build directories -->
+	<property name="build-process.dir" value="${project::get-base-directory()}/_build-process" />
+	<property name="build-process.dir.actions" value="${build-process.dir}/actions" />
+	<property name="build-process.dir.includes" value="${build-process.dir}/includes"/>
+	<property name="build-process.dir.checks" value="${build-process.dir}/checks"/>
+
+
+
+	<!-- Set time stamp for this build -->
+	<tstamp property="build-process.date" pattern="dd-MM-yyyy HH\h mm\m ss\s" verbose="true" />	
+	
+	<!-- Set  build log filename -->
+	<property name="build-process.logfile" value="build.lastbuild" />
+	
+	<!-- Begin process logs -->
+	<call target="StartLogs" />
+	
+		
+	<!-- Default project configuration used in the builds -->
+	<property name="project.configuration" value="debug" />
+		
+	<!-- LOAD EXTERNAL FILES -->
+	<include 
+	buildfile="${build-process.dir.actions}\load.external.files.buildaction" 
+	verbose="false" />
+		
+	<!-- COMMON CHECKS -->
+	<include 
+	buildfile="${build-process.dir.actions}\performchecks.buildaction" 
+	verbose="false" />
+	
+	<!-- SET DEFAULT VALUES -->
+	<include 
+	buildfile="${build-process.dir.actions}\set.default.properties.buildaction" 
+	verbose="false" />
+	
+	<!-- ++++++++++++++++++++++++++++++++++++++++ -->
+	<!--  BEGIN MISC TARGETS DEFINITION -->
+	<!-- ++++++++++++++++++++++++++++++++++++++++ -->
+	
+	<!-- starts recording build -->
+	<target
+		name="StartLogs">
+		
+		<!-- Begin log record -->
+		<record 
+			name="${build-process.logfile}.success"
+			level="Info"
+			action="Start" 
+			autoflush="true"/>
+		<record 
+			name="${build-process.logfile}.failure"
+			level="Info"
+			action="Start" 
+			autoflush="true"/>	
+	</target>
+		
+	<!-- Closes build log files -->
+	<target
+		name="CloseLogs">
+		
+		<record 
+			name="${build-process.logfile}.success"
+			action="Flush" />
+		<record 
+			name="${build-process.logfile}.success"
+			action="Close" />
+		<record 
+			name="${build-process.logfile}.failure"
+			action="Flush" />
+		<record 
+			name="${build-process.logfile}.failure"
+			action="Close" />			
+		
+	</target>
+	
+	<!-- Target executed when the build fails -->
+	<target 
+		name="Failure"
+		depends="CloseLogs">
+		
+		<!-- Erase the success log file -->
+		<delete file="${build-process.logfile}.success" />
+		<delete file="${build-process.logfile}.log" />
+		
+		<!-- Set the success log as the one generated from this build run -->
+		<copy 
+		overwrite="true"
+		file="${build-process.logfile}.failure" 
+		tofile="${build-process.logfile}.log" />
+		
+		<delete file="${build-process.logfile}.failure" />
+		
+		<echo message="[ERROR] BUILD FAILED See ${build-process.logfile} for details" />
+		
+	</target>
+
+	<!-- Target executed when the build is successful -->
+	<target 
+		name="Success" 
+		depends="CloseLogs">
+		
+		<!-- Erase the failure log file -->		
+		<delete file="${build-process.logfile}.failure" />
+		<delete file="${build-process.logfile}.log" />
+		
+		<!-- Set the success log as the one generated from this build run -->
+		<copy 
+		overwrite="true"
+		file="${build-process.logfile}.success" 
+		tofile="${build-process.logfile}.log" />
+		
+		<delete file="${build-process.logfile}.success" />
+		
+		<echo message="[OK] BUILD SUCCEDED See ${build-process.logfile} for details" />
+	
+	</target>
+	
+	<!-- This is the default target which shows the available targets for this build file -->
+	<target 
+		name="Help"
+		description="- Lists the available targets in the build file" >
+		
+		<echo message="-----------------------------------------------------" />
+		<echo message=" '${project.projectname}' build file Targets   " />
+		<echo message="-----------------------------------------------------" />
+		<echo message="" />
+			
+		<exec 
+			program="nant.exe"
+			basedir="${nant::get-base-directory()}"
+			commandline='-buildfile:"${project::get-buildfile-path()}" -projecthelp -nologo'
+		/>
+		
+		<echo message="[INFO] Subtargets should not be called by the user" />
+			
+			
+	</target>
+
+	<!-- Generates a list of the assemblies created in the build -->
+	<target 
+	name="ComputeIncludeList">
+		<!-- 
+		Using the contents from the filesToExclude property, generates a file named 'include.lst'  
+		containing the list of all the assemblies names located in the output directory which 
+		doesn't exists in the external libraries directory.
+		
+		e.g: C:\external-libs\lib.dll would be written in the 'includes.lst' file as C:\output\lib.dll, 
+			asuming C:\external-libs\ and C:\output\ the external lib and output folders in the project
+			
+		-->
+		<delete file="${project.directory.output}/includes.lst" />
+		
+		<script language="C#"  verbose="false">
+				<imports>
+					<import namespace="System.IO" />
+					<import namespace="System.Collections.Generic" />
+				</imports>
+				
+		        <code>
+		            <![CDATA[
+		                public static void ScriptMain(Project project) 
+						{
+							List<string> extLibFiles = new List<string>();
+							List<string> outputFiles = new List<string>();
+							List<string> toWrite = new List<string>();
+					
+							string[] extensions = {"*.dll", "*.exe", "*.pdb"};
+							
+							string extLibPath = project.Properties["project.directory.external-libraries"];
+							string outputPath = project.Properties["project.directory.output"];
+							
+							//Create list of files in external libraries directory 
+							foreach (string extension in extensions)
+							{
+								foreach(string path in Directory.GetFiles( extLibPath, extension ) )
+								{
+									string file = Path.GetFileName(path);
+									
+									//Do not include duplicates
+									if (!extLibFiles.Contains(file))
+										extLibFiles.Add(file);
+								}
+							}
+							
+							//Create list of files in output directory 
+							foreach (string extension in extensions)
+							{
+								foreach(string path in Directory.GetFiles( outputPath, extension) )
+								{
+									string file = Path.GetFileName(path);
+									
+									//Do not include duplicates
+									if (!outputFiles.Contains(file))
+										outputFiles.Add(file);
+								}
+							}
+							
+							//List of files in output folder which are not in the external libraries folder
+							foreach( string file in outputFiles)
+								if (!extLibFiles.Contains(file))
+									toWrite.Add(file);
+							
+							//Write the list to a file in the output folder
+		                   	using (StreamWriter sw = new StreamWriter( Path.Combine(outputPath, "includes.lst") ) )
+		                   	{
+								foreach(string file in toWrite)
+								{
+									sw.WriteLine(Path.Combine(outputPath, file) );
+								}
+		                   	}
+
+		                }
+		            ]]>
+		        </code>
+			</script>
+						
+	</target>
+	
+	<!-- ++++++++++++++++++++++++++++++++++++++++ -->
+	<!--  END MISC TARGETS DEFINITION -->
+	<!-- ++++++++++++++++++++++++++++++++++++++++ -->
+	
+
+	<!-- ++++++++++++++++++++++++++++++++++++++++ -->
+	<!--  BEGIN BUILD PROCESS TARGETS DEFINITION -->
+	<!-- ++++++++++++++++++++++++++++++++++++++++ -->
+	
+	<target
+		name="build">
+		<property name="project.configuration" value="debug" />
+		<call target="Compile" />
+		<call target="RunTests" />
+		<call target="MoveToLastBuild" />
+	</target>
+	
+	<target
+		name="build-release">
+		<property name="project.configuration" value="release" />
+		<call target="Compile" />
+		<call target="ComputeIncludeList" />
+		<call target="MoveToLastBuild" />
+		<call target="GenerateReports" />
+		<call target="GenerateDoc" />		
+	</target>
+	
+	<!-- Builds the main project solution and all the projects in it -->
+	<target 
+		name="Compile" 
+		description="- Compiles the project"
+		depends="Clean, Get IncreaseBuildNumber">
+
+		<echo message="[INFO] Building ${project.configuration} configuration" />
+	
+		<!-- Check project solution file exists -->
+		<if test="${not file::exists(project.filepath.solution)}" >
+			<fail message="Couldn't find a valid visual studio solution file at:
+			${project.filepath.solution}" />
+		</if>	
+		
+		<!-- Check versioning file exists  -->
+			<if test="${not file::exists(project.filepath.versioning)}" >
+					<fail message="Couldn't find a valid versioning file."/>
+					<fail />
+			</if>
+		
+		<!-- Compile solution -->
+		<solution verbose="false"
+			configuration="${project.configuration}"
+			outputdir="${project.directory.output}">
+			
+			<assemblyfolders>
+				<include name="${project.directory.external-libraries}" />
+			</assemblyfolders>
+			
+			<projects>
+				<include name="${project.directory.projects}\**\*.csproj" />
+			</projects>
+		</solution>
+	
+	</target>		
+	
+	<!-- Cleans up the development tree -->
+	<target 
+		name="Clean" 
+		description="- Cleans up the build environment"
+		depends="RepositoryCleanup">
+	
+		<!-- Set normal attribute to directories -->
+		<attrib normal="true" failonerror="false" >
+			<fileset>
+					<include name="src" />
+					<include name="src\**" />
+			</fileset>
+		</attrib>
+		
+		<msbuild 
+			project="${project.filepath.solution}"
+			verbosity="Quiet"
+			target="clean" />
+		
+		<if test="${property::get-value('project.sourcecontrol.useVCS') == 'true'}">
+			<delete dir="${project.directory." failonerror="false"/>
+			<mkdir dir="${project.directory." failonerror="false"/>
+		</if>
+		<delete dir="${project.directory.output}" failonerror="false"/>
+	</target>
+
+	<!-- Runs FXCop over the assemblies and generates an xml file with the results -->	
+	<target 
+		name="CodeAnalisys"
+		description="- Analyses the generated assemblies using FXCop">
+		
+		<!-- Get a fileset with the list of assemblies generated by this project -->
+		<fileset id="output.files">
+			<includesfile name="${project.directory.output}/includes.lst" />
+		</fileset>
+		
+		<!-- Create a temp directory where the assemblies generated for this project will be copied -->
+		<property name="fxcoptmpdir" value="${project.directory.output}\tmp" />
+		
+		<!-- Delete temp directory if exists-->
+		<delete dir="${fxcoptmpdir}" />
+		
+		<!-- Copy assemblies to a temp directory -->
+		<foreach property="currentFile" item="File">
+			<in>
+				<items refid="output.files" />
+			</in>
+			
+			<do>
+				<copy file="${currentFile}" todir="${fxcoptmpdir}" />
+			</do>
+		</foreach>
+
+		<!-- Execute FXCop -->
+		<exec program="${project.directory.tools}\fxcop\fxcopcmd.exe">
+			
+			<arg value="/rule:${project.directory.tools}\fxcop\rules" />
+			<arg value="/forceoutput" />
+			<arg value="/applyoutxsl" />
+			<arg value="/file:${fxcoptmpdir}" />
+			<arg value="/out:${project.directory.lastbuild.reports}/CodeAnalysis.html" />
+			<arg value="/directory:${project.directory.external-libraries}"/>
+		</exec>
+		
+		<!-- Delete temp directory if exists-->
+		<delete dir="${fxcoptmpdir}" />
+		
+	</target>
+
+	<!-- Commit a shared file into the subversion repository -->
+	<!-- For internal use, not listed in the help target -->
+	<target
+		name="CommitDir"
+		depends="RepositoryCleanup">
+		
+		<choose>
+			<when test="${property::get-value('project.sourcecontrol.useVCS') == 'true'}">
+				<!-- Check if properties has been created -->					
+			
+					<!-- Check if properties values are not empty -->
+					<if test="${property::get-value('commitFile.workingdir') != ''
+					and property::get-value('commitFile.message') != ''}">
+				
+							
+						<echo message="--> Commiting ${commitFile.workingdir} to repository"/>
+						<echo message="--> ${commitFile.message}" />
+						
+						<!-- Perform commit -->					
+						<exec 
+						program="${svn-binary-path}\svn.exe"
+						verbose="false">
+					
+							<arg line="commit" />
+							<arg dir="${commitFile.workingdir}" />
+							<arg line='-m"${commitFile.message}"' />
+							<arg line="--username ${project.sourcecontrol.user} --password ${project.sourcecontrol.pass}" />
+							
+						</exec>
+						
+						<!-- Set properties values to empty -->					
+						<property name="commitFile.message" value="" dynamic="true" />
+						<property name="commitFile.workingdir" value="" dynamic="true" />
+						
+					</if>
+
+			</when>
+			
+			<otherwise>
+				<echo message="[INFO] Not using a VCS, skipping" />
+			</otherwise>
+		</choose>
+	</target>
+		
+	<!-- Generates documentation from XML comments in the vs project -->
+	<target 
+		name="GenerateDoc" 
+		description="- Generate documentation files">
+	</target>		
+	
+	<!-- Generates a new GUID for the project -->
+	<!-- If property ${project.guid} is already set, the GUID is not modified -->
+	<target 
+		name="GenerateGUID"
+		description="- Generates a new GUID for the project">
+		
+		<if test="${ not property::exists('project.guid') }">
+			<script language="C#">
+				<imports>
+					<import namespace="System.IO" />
+				</imports>
+		        <code>
+		            <![CDATA[
+		                public static void ScriptMain(Project project) 
+						{
+							string guidFilePath = project.Properties["project.filepath.guid"];
+							string projectGUID;
+							
+							if (File.Exists(guidFilePath))
+							{
+								using (StreamReader sr = new StreamReader(guidFilePath))
+								{
+									projectGUID = sr.ReadToEnd().Trim();
+								}
+							}
+							else
+							{
+								projectGUID = Guid.NewGuid().ToString();
+								using (StreamWriter sw = new StreamWriter(guidFilePath))
+								{
+									sw.Write(projectGUID);
+								}
+							}
+							
+							
+		                    project.Properties["project.guid"] = projectGUID;
+		                }
+		            ]]>
+		        </code>
+			</script>
+		</if>
+	</target>
+	
+	<!-- Generate reports both for NUnit tests and FX reports -->
+	<target 
+		name="GenerateReports" 
+		description="- Generate unit tests and coverage reports"
+		depends="RunTests, CodeAnalisys">
+		
+		<fileset id="nunit.inputfiles">
+			<include name="${project.directory.tests}\*.xml" />
+		</fileset>
+		
+		<choose>
+		<when test="${fileset::has-files('nunit.inputfiles')}">			
+			<nunit2report
+				format="NoFrames"
+				todir="${project.directory.lastbuild.reports}">
+				<fileset>
+					<include name="${project.directory.tests}\*.xml" />
+				</fileset>
+			</nunit2report>
+			
+			<move file="${project.directory.lastbuild.reports}\index.html" tofile="${project.directory.lastbuild.reports}\${project.filepath.tests-report}.html" />
+			
+			<echo message="Generated unit test report file at ${project.directory.lastbuild.reports}\${project.filepath.tests-report}.html" />
+			</when>
+			<otherwise>
+				<echo message="[INFO] No unit tests found. Skipping..." />
+			</otherwise>
+		</choose>
+	</target>
+	
+	<!-- Retrieves code from versioning system -->
+	<!-- Defined for Subversion -->
+	<target 
+		name="Get"
+		description="- Grabs the code from the repository"
+		depends="RepositoryCleanup">
+		
+		<choose>
+			<when test="${property::get-value('project.sourcecontrol.useVCS') == 'true'}">
+				<exec
+					failonerror="false"
+					program="${svn-binary-path}\svn.exe"
+					output="last-svn-checkout.log"
+					workingdir="${project.directory."
+					verbose="false">
+					
+						<arg line="checkout" />
+						<arg line="${project.sourcecontrol.URI}" />
+						<arg dir="${project.directory. " />
+						<arg line="--username ${project.sourcecontrol.user} --password ${project.sourcecontrol.pass}" />
+				</exec>
+								
+				<!-- Delete the log if the target execution is successful -->
+				<delete file="last-svn-checkout.log" /> 
+			
+			</when>
+				
+			<otherwise>
+				<echo message="[INFO] Not using a VCS, skipping" />
+			</otherwise>
+		
+		</choose>
+	
+	
+	</target>
+	
+	<!-- Updates the build number -->
+	<!-- Uses the creation date of the project solution as the project start date-->
+	<target 
+		name="IncreaseBuildNumber" 
+		description="- Updates project's version build number">
+	
+		<version 
+			verbose="true"
+			path="${project.filepath.versioning}"
+			startdate="${file::get-creation-time(project.filepath.solution)}" />
+		
+		<call target="UpdateVersionFile" />
+	</target>
+	
+	<!-- Increases version's major number, and sets minor number to 0 -->
+	<target 
+		name="IncreaseMajorNumber"
+		description="- Increases project's version major number">
+	    <script language="C#">
+		
+	        <imports>
+				<import namespace="System.IO" />
+				<import namespace="System.Threading" />
+	            <import namespace="System.Globalization" />
+	        </imports>
+			
+	        <code>
+	            <![CDATA[
+	                public static void ScriptMain(Project project) 
+					{
+						string buildFilePath = project.Properties["project.filepath.versioning"];
+												
+						Version currentVersion;
+						
+						using (StreamReader sr = new StreamReader(buildFilePath))
+						{
+							string s = sr.ReadToEnd().Trim();
+							currentVersion = new Version(s);
+						}
+							
+						int major, minor, build, revision;
+						
+						major = currentVersion.Major + 1;
+						minor = 0;
+						build = currentVersion.Build;
+						revision = currentVersion.Revision;
+						
+						Version newVersion = new Version(major, minor, build, revision);
+						using (StreamWriter sw = new StreamWriter(buildFilePath))
+						{
+							sw.Write(newVersion.ToString());
+						}
+						
+						project.Properties["buildnumber.version"] = newVersion.ToString();
+						Console.WriteLine("New version: {0}", newVersion);
+	                }
+	            ]]>
+
+	        </code>
+		</script>
+		
+		<delete file="${project.filepath.guid}" failonerror="false" />
+		
+		<call target="UpdateVersionFile" />
+	</target>
+	
+	<!-- Increases version's minor number -->
+	<target 
+		name="IncreaseMinorNumber"
+		description="- Increases project's version minor number">
+	    <script language="C#">
+	        <imports>
+				<import namespace="System.IO" />
+				<import namespace="System.Threading" />
+	            <import namespace="System.Globalization" />
+	            
+	        </imports>
+	        <code>
+	            <![CDATA[
+	                public static void ScriptMain(Project project) 
+					{
+						string buildFilePath = project.Properties["project.filepath.versioning"];
+						Version currentVersion;
+						
+						using (StreamReader sr = new StreamReader(buildFilePath))
+						{
+							string s = sr.ReadToEnd().Trim();
+							currentVersion = new Version(s);
+						}
+						int major, minor, build, revision;
+						
+						major = currentVersion.Major;
+						minor = currentVersion.Minor + 1;
+						build = currentVersion.Build;
+						revision = currentVersion.Revision;
+						
+						Version newVersion = new Version(major, minor, build, revision);
+						using (StreamWriter sw = new StreamWriter(buildFilePath))
+						{
+							sw.Write(newVersion.ToString());
+						}
+
+						project.Properties["buildnumber.version"] = newVersion.ToString();
+						Console.WriteLine("New version: {0}", project.Properties["buildnumber.version"] );
+						Console.WriteLine("New version: {0}", project.Properties["buildnumber.version"] );
+	                }
+	            ]]>
+
+	        </code>
+		</script>
+		
+		<call target="UpdateVersionFile" />
+		
+	</target>
+	
+	<target 
+		name="MoveToLastBuild">
+		
+		<delete dir="${project.directory.lastbuild}" failonerror="false"/>
+		<delete dir="${project.directory.lastbuild.documentation}" failonerror="false"/>
+		<delete dir="${project.directory.lastbuild.reports}" failonerror="false"/>
+
+		<mkdir dir="${project.directory.lastbuild}" failonerror="false"/>
+		<mkdir dir="${project.directory.lastbuild.documentation}" failonerror="false"/>
+		<mkdir dir="${project.directory.lastbuild.reports}" failonerror="false"/>
+		
+		<copy todir="${project.directory.lastbuild.output}" >
+		    <fileset basedir="${project.directory.output}">
+				<include name="*.*" />
+			</fileset>
+
+		</copy>
+	</target>
+			
+	<target 
+		name="Publish" 
+		description="- Place all files for the last build of the project, including assets, reports and docs; in the specified location">
+			
+			<if test="${property::get-value('project.configuration') == 'release'}">
+					<call name="IncreaseMinorNumber" />
+			</if>
+			
+			<property 
+			name="output.name" 
+			value="${ project.projectname}.${project.configuration}.{buildnumber.version}" />
+			
+			<mkdir dir="${project.directory.lastbuild}/${output.name}" />
+		
+			<copy todir="${project.directory.lastbuild}/${output.name}">
+				<fileset basedir="${project.directory.output}">
+					<include name="*.*" />
+				</fileset>
+			</copy>
+			
+			<zip zipfile="${project.directory.lastbuild}/${output.name}.zip">
+				<fileset basedir="${project.directory.output}">
+					<include name="${project.directory.output}/*.*" />
+				</fileset>
+			</zip>
+					
+	</target>
+	
+	<target
+		name="RepositoryCleanup"
+		description="- Issues a 'cleanup' command to the repository">
+			
+			<choose>
+				<when test="${property::get-value('project.sourcecontrol.useVCS') == 'true'}">
+					
+					<!-- Perform cleanup -->
+					
+					<exec 
+						failonerror="false"
+						program="svn.exe"
+						basedir="${svn-binary-path}"
+						workingdir="${project.directory."
+						verbose="true">
+				
+						<arg line="cleanup" />
+						<arg line="--username ${project.sourcecontrol.user} --password ${project.sourcecontrol.pass}" />
+						
+					</exec>
+				</when>
+				
+				<otherwise>
+					<echo message="[INFO] Not using a VCS, skipping" />
+				</otherwise>
+			</choose>
+		
+	</target>
+	
+	<!-- Executes NUnit tests and NCover and generates an xml file with the results -->
+	<target
+		name="RunTests" 
+		description="- Run unit tests">
+		
+		<!-- Compile tests -->	
+		<solution verbose="false"
+			configuration="${project.configuration}"
+			outputdir="${project.directory.tests}">
+			
+			<assemblyfolders>
+				<include name="${project.directory.external-libraries}" />
+				<include name="${project.directory.output}" />
+			</assemblyfolders>
+			
+			<projects>
+				<include name="${project.directory.projects}\**\*.csproj" />
+				<include name="${project.directory.tests}\**\*.csproj" />
+			</projects>
+		</solution>
+			
+			
+		<!-- Run the tests! -->
+		<nunit2 verbose="false">
+			<!-- Create a xml results file for reports-->
+			<formatter 
+				type="Xml" 
+				usefile="true" 
+				extension=".xml"
+				outputdir="${project.directory.tests}" />
+							
+			<test>
+				<!-- Include all assemblies in the output directory -->
+				<assemblies>
+					<include name="${project.directory.tests}\*Tests*.dll" />
+				</assemblies>
+			</test>
+		</nunit2>
+										
+		<echo message="[INFO] Test run sucessful!" />
+		
+		<fileset id="nunit.inputfiles">
+			<include name="${project.directory.tests}\*.xml" />
+		</fileset>
+		
+		<choose>
+		<when test="${fileset::has-files('nunit.inputfiles')}">			
+			<nunit2report
+				format="NoFrames"
+				todir="${project.directory.lastbuild.reports}">
+				<fileset>
+					<include name="${project.directory.tests}\*.xml" />
+				</fileset>
+			</nunit2report>
+			
+			<move file="${project.directory.lastbuild.reports}\index.html" tofile="${project.directory.lastbuild.reports}\${project.filepath.tests-report}.html" />
+			
+			<echo message="Generated unit test report file at ${project.directory.lastbuild.reports}\${project.filepath.tests-report}.html" />
+			</when>
+			<otherwise>
+				<echo message="[INFO] No unit tests found. Skipping..." />
+			</otherwise>
+		</choose>
+
+	</target>	
+	
+	<!-- Updates the assembly data file file, generating a new one and committing it to the repository -->
+	<target 
+		name="UpdateDataAssembly" 
+		description="- Updates data assembly file and commits it to the repository">
+				<version 
+					path="${project.filepath.versioning}"
+					startdate="${file::get-creation-time(project.filepath.solution)}" />
+				
+				<asminfo
+				language="CSharp"
+				output="${project.filepath.data-assembly}">
+					<imports>
+						<import namespace="System.Reflection" />
+						<import namespace="System.Runtime.InteropServices" />
+					</imports>
+					
+					<attributes>
+						<attribute type="AssemblyTitleAttribute" value="${project.projectname}" />
+						<attribute type="AssemblyDescriptionAttribute" value="${project.description}" />
+						<attribute type="AssemblyConfigurationAttribute" value="${project.configuration}" />
+						<attribute type="AssemblyCompanyAttribute" value="${project.company}" />
+						<attribute type="AssemblyProductAttribute" value="${project.productname}" />
+						<attribute type="AssemblyCopyrightAttribute" value="${project.copyright}" />
+						<attribute type="AssemblyTrademarkAttribute" value="${project.trademark}" />
+						<attribute type="GuidAttribute" value="${project.guid}" />
+						<attribute type="AssemblyVersionAttribute" value="${buildnumber.version}" />	
+					</attributes>
+				</asminfo>
+				
+				<property name="commitFile.message" value="[Automatic commit] Updated assembly data flie" dynamic="true" />
+				<property name="commitFile.workingdir" value="${project.directory.shared}" dynamic="true" />
+				
+				<call target="CommitDir" />
+	
+	</target>
+	
+	<!-- Updates the versioning file, committing it to the repository -->
+	<target
+		name="UpdateVersionFile"
+		description="- Updates the versioning file and commits it to the repository">
+				
+			<call target="GenerateGUID" />	
+			
+			<property name="commitFile.message" value="[Automatic commit] Updated version number to ${buildnumber.version}" dynamic="true" />
+			<property name="commitFile.workingdir" value="${project.directory.shared}" dynamic="true" />
+			<call target="CommitDir" />
+			
+			<call target="UpdateDataAssembly" />
+	</target>	
+	
+	<!-- ++++++++++++++++++++++++++++++++++++++++ -->
+	<!--  END BUILD PROCESS TARGETS DEFINITION -->
+	<!-- ++++++++++++++++++++++++++++++++++++++++ -->
+	
+</project>

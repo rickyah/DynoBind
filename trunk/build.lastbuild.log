@@ -1,0 +1,36 @@
+     [echo] [INFO] Including external files:
+     [echo]  -> development-tree.definition.buildinclude
+     [echo]  -> external-tool.paths.buildinclude
+     [echo]  -> project.properties.buildinclude
+     [echo] 
+     [echo] [INFO] Performing checks... 
+     [echo]  --> Checking development tree properties
+     [echo]  --> Checking project properties...
+     [echo] [OK] All checks passed
+     [echo] 
+     [echo] [INFO] Using default solution file:
+     [echo]  -> LateBindingHelper.sln
+     [echo] 
+     [echo] [INFO] Using default versioning file:
+     [echo]  -> version.number
+     [echo] 
+     [echo] [INFO] Using default guid file:
+     [echo]  -> guid.number
+     [echo] 
+     [echo] [INFO] Using default assemblyl file:
+     [echo]  -> CommonProjectAssembly.cs
+     [echo] 
+     [echo] [INFO] Using tests reports file:
+     [echo]  -> UnitTestsReports
+     [echo] 
+
+RepositoryCleanup:
+
+     [echo] [INFO] Not using a VCS, skipping
+
+Clean:
+
+   [delete] Deleting directory 'C:\Documents and Settings\Adama\Escritorio\LateBindingHelper\output'.
+
+CloseLogs:
+

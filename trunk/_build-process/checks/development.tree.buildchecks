@@ -1,0 +1,4 @@
+<target name="Tree.Checks">
+	<echo message=" --> Checking development tree properties" />
+	
+</target>
