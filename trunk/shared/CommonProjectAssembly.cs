@@ -13,11 +13,11 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitleAttribute("LateBindingHelper")]
 [assembly: AssemblyDescriptionAttribute("A simple library for simplifying late binding calls in C#")]
-[assembly: AssemblyConfigurationAttribute("debug")]
+[assembly: AssemblyConfigurationAttribute("release")]
 [assembly: AssemblyCompanyAttribute("RickyAH")]
 [assembly: AssemblyProductAttribute("LateBindingHelper")]
 [assembly: AssemblyCopyrightAttribute("(C) 2008")]
 [assembly: AssemblyTrademarkAttribute("")]
 [assembly: GuidAttribute("47f666b9-fa01-4b03-acf9-3b583d440f0f")]
-[assembly: AssemblyVersionAttribute("2.1.17.6464")]
+[assembly: AssemblyVersionAttribute("2.1.17.6508")]
 

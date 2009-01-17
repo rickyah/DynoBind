@@ -14,7 +14,7 @@ namespace LateBindingHelper
     public static class BindingFactory
     {
         /// <summary>
-        /// Creates a <see cref="ILateBindingFacade"/> instance binded to a object instance.
+        /// Creates a <see cref="IOperationInvoker"/> instance binded to a object instance.
         /// </summary>
         /// <remarks></remarks>
         public static IOperationInvoker CreateObjectBinding(object obj)
@@ -25,7 +25,7 @@ namespace LateBindingHelper
         }
 
         /// <summary>
-        /// Creates a <see cref="IInvoker"/> instance binded to a new instance of a type.
+        /// Creates a <see cref="IOperationInvoker"/> instance binded to a new instance of a type.
         /// </summary>
         /// <remarks></remarks>
         public static IOperationInvoker CreateObjectBinding(Type lbType)
@@ -36,10 +36,10 @@ namespace LateBindingHelper
         }
 
         /// <summary>
-        /// Creates a new <see cref="IInvoker"/> instance binded to a internal created 
+        /// Creates a new <see cref="IOperationInvoker"/> instance binded to a internal created 
         /// instance of a type using the specified arguments to the constructor
         /// </summary>
-        /// <param name="lbType">Type of the object to instanciate</param>
+        /// <param name="lbType">Type of the object to instantiate</param>
         /// <param name="args">Arguments for the type constructor</param>
         public static IOperationInvoker CreateObjectBinding(Type lbType, params object[] args)
         {
@@ -49,6 +49,13 @@ namespace LateBindingHelper
         }
 
 
+        /// <summary>
+        /// Creates a new <see cref="IOperationInvoker"/> instance binded to a internal created 
+        /// instance of a type using the specified arguments to the constructor
+        /// </summary>
+        /// <param name="assemblyName">Name of the assembly which contains the type to be instantiated.</param>
+        /// <param name="typeName">Full name of the type to be instantiated.</param>
+        /// <returns></returns>
         public static IOperationInvoker CreateObjectBinding(string assemblyName, string typeName)
         {
             if (assemblyName == null || assemblyName == string.Empty)
@@ -63,11 +70,12 @@ namespace LateBindingHelper
         }
 
         /// <summary>
-        /// Creates a new <see cref="IInvoker"/> instance binded to a internal created 
+        /// Creates a new <see cref="IOperationInvoker"/> instance binded to a internal created 
         /// instance of a type using the specified arguments to the constructor
         /// </summary>
         /// 
-        /// <param name="lbType">Type of the object to instanciate</param>
+        /// <param name="assemblyName">Type of the object to instantiate</param>
+        /// <param name="typeName">Full name of the type to be instantiated.</param>
         /// <param name="args">Arguments for the type constructor</param>
         public static IOperationInvoker CreateObjectBinding(string assemblyName, string typeName, params object[] args)
         {
@@ -83,9 +91,10 @@ namespace LateBindingHelper
         }
 
         /// <summary>
-        /// Creates a <see cref="IInvoker"/> instance binded to a new instance of 
-        /// the automation object referenced by the <paramref name="objectName"/>
+        /// Creates a <see cref="IOperationInvoker"/> instance binded to a new instance of 
+        /// the automation object referenced by the namep <paramref name="objectName"/>
         /// </summary>
+        /// <param name="objectName"></param>
         public static IOperationInvoker CreateAutomationBinding(string objectName)
         {
             if (objectName == null || objectName == string.Empty)
