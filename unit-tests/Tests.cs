@@ -137,7 +137,7 @@ namespace LateBindingHelper.Tests
             Assert.That(_lateBindingFacade.Index(5).Get(), Is.EqualTo(("value:" + "[myValue]")));
         }
 
-        [Test]
+        [Test, Ignore]
         public void WordAutomationTest_NotReallyATestUnit()
         {
             IOperationInvoker wordApp = BindingFactory.CreateAutomationBinding("Word.Application");
