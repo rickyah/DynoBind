@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- 
+	Defines the development tree structure
+-->
+<properties>
+
+	<!-- BASE DIRECTORIES -->	
+	<property 
+		name="project.directory.base" 
+		value="${project::get-base-directory()}/" />
+	
+	<property 
+		name="project.directory.tools" 
+		value="${project::get-base-directory()}/tools" />
+	
+	<property 
+		name="project.directory.lastbuild"
+		value="${project::get-base-directory()}/lastbuild" />
+
+	<property 
+		name="project.directory.lastbuild.output"
+		value="${project.directory.lastbuild}/output" />		
+		
+	<property 
+		name="project.directory.lastbuild.reports" 
+		value="${project.directory.lastbuild}/reports" />
+		
+	<property
+		name="project.directory.lastbuild.documentation" 
+		value="${project.directory.lastbuild}/documentation" />	
+		
+	<property 
+		name="project.directory.external-libraries"
+		value="${project::get-base-directory()}/extlibs" />
+		
+	<property
+		name="project.directory.output"
+		value="${project::get-base-directory()}/output" />
+		
+	<property 
+		name="project.directory.projects" 
+		value="${project::get-base-directory()}/projects" />		
+
+	<property 
+		name="project.directory.resources" 
+		value="${project::get-base-directory()}/resources" />
+		
+	<property
+		name="project.directory.shared"
+		value="${project::get-base-directory()}/shared" />
+		
+	<property 
+		name="project.directory.tests" 
+		value="${project::get-base-directory()}/unit-tests" />		
+			
+</properties>
+
+

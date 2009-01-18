@@ -1,0 +1,92 @@
+<target name="SetDefaultValues.Action">
+	
+	<!-- Checks for default values in external files  -->
+	
+	<!-- Set default project solution file name if needed-->
+	<choose>
+		<when test="${project.filepath.solution == 'default'}" >
+			<property 
+				name="project.filepath.solution" 
+				value="${project.directory.base}\${string::replace(project.projectname, ' ', '') }.sln" />				
+			<echo message="[INFO] Using default solution file:" />
+			<echo message=" -> ${ path::get-file-name(project.filepath.solution)}" />
+			<echo />
+
+		</when>
+		
+		<otherwise>
+			<property 
+				name="project.filepath.solution" 
+				value="${project.directory.base}\${project.filepath.solution}.sln" />
+		</otherwise>
+	</choose>
+	
+	<!-- Set default versioning file if needed -->
+	<choose>
+		<when test="${project.filepath.versioning == 'default'}" >
+			<property 
+				name="project.filepath.versioning" 
+				value="${project.directory.shared}\version.number" />
+			<echo message="[INFO] Using default versioning file:" />
+			<echo message=" -> ${ path::get-file-name(project.filepath.versioning) }" />
+			<echo />
+
+		</when>
+	
+		<otherwise>
+			<property 
+				name="project.filepath.versioning" 
+				value="${project.directory.shared}\${project.filepath.versioning}" />		
+		</otherwise>
+	</choose>
+	
+	<!-- Set default guid file if needed -->
+	<choose>
+		<when test="${project.filepath.guid == 'default'}" >
+			<property 
+				name="project.filepath.guid" 
+				value="${project.directory.shared}\guid.number" />
+			<echo message="[INFO] Using default guid file:" />
+			<echo message=" -> ${ path::get-file-name(project.filepath.guid) }" />
+			<echo />
+
+		</when>
+	
+		<otherwise>
+			<property 
+				name="project.filepath.guid" 
+				value="${project.directory.shared}\${project.filepath.guid}" />		
+		</otherwise>
+	</choose>	
+	
+	<!-- Set default assembly data filename if needed-->
+	<choose>
+		<when test="${project.filepath.data-assembly == 'default'}" >
+			<property 
+				name="project.filepath.data-assembly" 
+				value="${project.directory.shared}\CommonProjectAssembly.cs" />
+			<echo message="[INFO] Using default assemblyl file:" />
+			<echo message=" -> ${ path::get-file-name(project.filepath.data-assembly) }" />
+			<echo />
+
+		</when>
+	
+		<otherwise>
+			<property 
+				name="project.filepath.data-assembly" 
+				value="${project.directory.shared}\${project.filepath.data-assembly}.cs" />		
+		</otherwise>
+	</choose>
+	
+	
+	<!-- Set default reports data filename if needed-->
+	<if test="${property::get-value('project.filepath.tests-report') == 'default'}" >
+		<property 
+			name="project.filepath.tests-report" 
+			value="UnitTestsReports" />
+		<echo message="[INFO] Using tests reports file:"/>
+		<echo message=" -> ${ path::get-file-name(project.filepath.tests-report) }" />
+	</if>
+	
+	<echo />
+</target>
