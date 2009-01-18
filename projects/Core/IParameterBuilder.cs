@@ -33,6 +33,7 @@ namespace LateBindingHelper
         /// <summary>
         /// Access the parameter list as an array
         /// </summary>
+        /// <returns>An array of objects with the currenly aded parameters.</returns>
         object[] GetParametersAsArray();
 
         /// <summary>
