@@ -16,7 +16,9 @@ namespace LateBindingHelper
         /// <summary>
         /// Creates a <see cref="IOperationInvoker"/> instance binded to a object instance.
         /// </summary>
-        /// <remarks></remarks>
+        /// <returns>
+        /// A new <see cref="IOperationInvoker"/> instance.
+        /// </returns>
         public static IOperationInvoker CreateObjectBinding(object obj)
         {
             if (obj == null)
@@ -27,7 +29,9 @@ namespace LateBindingHelper
         /// <summary>
         /// Creates a <see cref="IOperationInvoker"/> instance binded to a new instance of a type.
         /// </summary>
-        /// <remarks></remarks>
+        /// <returns>
+        /// A new <see cref="IOperationInvoker"/> instance.
+        /// </returns>
         public static IOperationInvoker CreateObjectBinding(Type lbType)
         {
             if (lbType == null)
@@ -41,6 +45,9 @@ namespace LateBindingHelper
         /// </summary>
         /// <param name="lbType">Type of the object to instantiate</param>
         /// <param name="args">Arguments for the type constructor</param>
+        /// <returns>
+        /// A new <see cref="IOperationInvoker"/> instance.
+        /// </returns>
         public static IOperationInvoker CreateObjectBinding(Type lbType, params object[] args)
         {
             if (lbType == null)
@@ -55,7 +62,9 @@ namespace LateBindingHelper
         /// </summary>
         /// <param name="assemblyName">Name of the assembly which contains the type to be instantiated.</param>
         /// <param name="typeName">Full name of the type to be instantiated.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// A new <see cref="IOperationInvoker"/> instance.
+        /// </returns>
         public static IOperationInvoker CreateObjectBinding(string assemblyName, string typeName)
         {
             if (assemblyName == null || assemblyName == string.Empty)
@@ -97,6 +106,9 @@ namespace LateBindingHelper
         /// the automation object referenced by the namep <paramref name="objectName"/>
         /// </summary>
         /// <param name="objectName"></param>
+        /// <returns>
+        /// A new <see cref="IOperationInvoker"/> instance.
+        /// </returns>
         public static IOperationInvoker CreateAutomationBinding(string objectName)
         {
             if (objectName == null || objectName == string.Empty)
