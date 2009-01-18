@@ -85,6 +85,8 @@ namespace LateBindingHelper
             if (typeName == null || typeName == string.Empty)
                 throw new ArgumentNullException("Invalid type name");
 
+            //TODO: Obsolete but needed to avoid passing the complete assembly name (which includes
+            //assembly version and public key
             Type lbType = Assembly.LoadWithPartialName(assemblyName).GetType(typeName, false);
 
             return new Invoker(Activator.CreateInstance(lbType, args));

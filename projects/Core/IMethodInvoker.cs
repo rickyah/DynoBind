@@ -7,7 +7,7 @@ namespace LateBindingHelper
 
     /// <summary>
     /// Provides an interface which will allow adding parameters to a method defined
-    /// bya a <see cref="IMethdoAccessor"/>,  and invoke that method
+    /// bya a <see cref="IMethodAccessor"/>,  and invoke that method
     /// </summary>
     public interface IMethodInvoker
     {
@@ -22,9 +22,10 @@ namespace LateBindingHelper
 
         /// <summary>
         /// Adds a parameter to the method call, passed with reference semantics
+        /// </summary>
         /// <param name="value">object to be passed as parameter</param>
         /// <returns>
-        /// A reference to the object which made this operation
+        /// A reference to the <see cref="IMethodInvoker"/> instance which called this method.
         /// </returns>
         IMethodInvoker AddRefParameter(object value);
 
