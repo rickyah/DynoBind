@@ -16,6 +16,9 @@ namespace LateBindingHelper
         /// <summary>
         /// Creates a <see cref="IOperationInvoker"/> instance binded to a object instance.
         /// </summary>
+        /// <param name="obj">
+        /// Object instance.
+        /// </param>
         /// <returns>
         /// A new <see cref="IOperationInvoker"/> instance.
         /// </returns>
@@ -29,6 +32,7 @@ namespace LateBindingHelper
         /// <summary>
         /// Creates a <see cref="IOperationInvoker"/> instance binded to a new instance of a type.
         /// </summary>
+        /// <param name="lbType">Type of the object used to create the instance.</param>
         /// <returns>
         /// A new <see cref="IOperationInvoker"/> instance.
         /// </returns>
@@ -54,7 +58,6 @@ namespace LateBindingHelper
                 throw new ArgumentNullException("Late Binding type is null");
             return new Invoker(Activator.CreateInstance(lbType, args));
         }
-
 
         /// <summary>
         /// Creates a new <see cref="IOperationInvoker"/> instance binded to a internal created 
@@ -82,7 +85,6 @@ namespace LateBindingHelper
         /// Creates a new <see cref="IOperationInvoker"/> instance binded to a internal created 
         /// instance of a type using the specified arguments to the constructor
         /// </summary>
-        /// 
         /// <param name="assemblyName">Type of the object to instantiate</param>
         /// <param name="typeName">Full name of the type to be instantiated.</param>
         /// <param name="args">Arguments for the type constructor</param>
