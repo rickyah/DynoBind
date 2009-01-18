@@ -7,6 +7,7 @@ using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 
 using LateBindingHelper;
+using LateBindingHelper.Exceptions;
 
 
 namespace LateBindingHelper.Tests
@@ -67,7 +68,7 @@ namespace LateBindingHelper.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(Exception))]
+        [ExpectedException(typeof(OperationCallFailedException))]
         public void TestMethodCall_Failure()
         {
             _lateBindingFacade.Method("blerz").Invoke();
