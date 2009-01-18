@@ -86,6 +86,9 @@ namespace LateBindingHelper
         /// <param name="assemblyName">Type of the object to instantiate</param>
         /// <param name="typeName">Full name of the type to be instantiated.</param>
         /// <param name="args">Arguments for the type constructor</param>
+        /// <returns>
+        /// A new <see cref="IOperationInvoker"/> instance.
+        /// </returns>
         public static IOperationInvoker CreateObjectBinding(string assemblyName, string typeName, params object[] args)
         {
             if (assemblyName == null || assemblyName == string.Empty)
@@ -103,18 +106,18 @@ namespace LateBindingHelper
 
         /// <summary>
         /// Creates a <see cref="IOperationInvoker"/> instance binded to a new instance of 
-        /// the automation object referenced by the namep <paramref name="objectName"/>
+        /// the automation object referenced by a progid <paramref name="progID"/>
         /// </summary>
-        /// <param name="objectName"></param>
+        /// <param name="progID">An string with the application's ProgID </param>
         /// <returns>
         /// A new <see cref="IOperationInvoker"/> instance.
         /// </returns>
-        public static IOperationInvoker CreateAutomationBinding(string objectName)
+        public static IOperationInvoker CreateAutomationBinding(string progID)
         {
-            if (objectName == null || objectName == string.Empty)
-                throw new ArgumentNullException("Invalid object name.");
+            if (progID == null || progID == string.Empty)
+                throw new ArgumentNullException("Invalid ProgID.");
 
-            Type objectType = Type.GetTypeFromProgID(objectName);
+            Type objectType = Type.GetTypeFromProgID(progID);
 
             return new Invoker(Activator.CreateInstance(objectType));
         }
