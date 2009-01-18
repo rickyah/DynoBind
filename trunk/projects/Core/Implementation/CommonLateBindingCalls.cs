@@ -5,6 +5,8 @@ using System.Reflection;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
+using LateBindingHelper.Exceptions;
+
 namespace LateBindingHelper.Implementation
 {
     /// <summary>
@@ -17,6 +19,9 @@ namespace LateBindingHelper.Implementation
         /// Operation in this context is any method or property in
         /// an object
         /// </summary>
+        /// <param name="instanceObject">
+        /// Instance object which recieves the operation call.
+        /// </param>
         /// <param name="operationName">
         /// Name of operation to be called</param>
         /// <param name="args">
@@ -96,6 +101,9 @@ namespace LateBindingHelper.Implementation
         /// Operation in this context is any method or property in
         /// an object
         /// </summary>
+        /// <param name="instanceObject">
+        /// Instance object which recieves the operation call.
+        /// </param>
         /// <param name="operationName">Name of operation to be called</param>
         /// <param name="args">Args for this operation call. Must be passed as an array of
         /// objects, or null if the method doesn't need arguments</param>
@@ -147,12 +155,12 @@ namespace LateBindingHelper.Implementation
             {
                 if (e.InnerException != null && e.InnerException is COMException)
                 {
-                    throw new Exception(
+                    throw new OperationCallFailedException(
                         ErrorStrings.LATEBINDING_CALL_FAILED + " " + e.Message,
                         Marshal.GetExceptionForHR((e.InnerException as COMException).ErrorCode));
                 }
 
-                throw new Exception(ErrorStrings.LATEBINDING_CALL_FAILED + " " + e.Message, e);
+                throw new OperationCallFailedException(ErrorStrings.LATEBINDING_CALL_FAILED + " " + e.Message, e);
             }
 
             //All OK
