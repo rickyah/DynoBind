@@ -13,7 +13,8 @@ namespace LateBindingHelper
         /// Performs indexer access over a type.
         /// </summary>
         /// <param name="indexName">object used as indexer</param>
-        /// An <see cref="IGetSetInvoker"/> that will establish the operation to
+        /// <returns>
+        /// An <see cref="IGetSetInvoker"/> instance that will establish the operation to
         /// perform over the specifyed index.
         /// </returns>
         IGetSetInvoker Index(object indexName);

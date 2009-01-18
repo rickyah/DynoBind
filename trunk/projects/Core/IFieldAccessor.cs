@@ -15,7 +15,7 @@ namespace LateBindingHelper
         /// <param name="fieldName">String with the name of the field to be invoked</param>
         /// <returns> 
         /// An <see cref="IGetSetInvoker"/> that will establish the operation to
-        /// perform over the field specifyed by the <param name="fieldName">fieldName</param>
+        /// perform over the field specifyed by the fieldName parameter.
         /// </returns>
         IGetSetInvoker Field (string fieldName);
     }
