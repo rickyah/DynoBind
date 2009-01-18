@@ -5,9 +5,10 @@ using System.Text;
 namespace LateBindingHelper.Implementation
 {
     /// <summary>
-    /// 
+    /// Implements the <see cref="IParameterBuilder"/> interface to 
+    /// save information about parameters in a method call.
     /// </summary>
-    public class ParameterBuilder : IParameterBuilder
+    internal class ParameterBuilder : IParameterBuilder
     {
         #region Private Members
         /// <summary>
