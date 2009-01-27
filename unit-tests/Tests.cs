@@ -56,7 +56,7 @@ namespace LateBindingHelper.Tests
         {
             Assert.That(_lateBindingFacade.Field("myField").Get<Int32>(), Is.EqualTo(27));
 
-            _lateBindingFacade.Field("myField").Set(-50);
+            _lateBindingFacade.Field("myField").Set(-55);
 
             Assert.That(_lateBindingFacade.Field("myField").Get<Int32>(), Is.EqualTo(-50));
         }
@@ -128,7 +128,7 @@ namespace LateBindingHelper.Tests
             Assert.That(_lateBindingFacade.Property("MyProp").Get<Int32>(), Is.EqualTo(69));
         }
 
-        [Test]
+        [Test,ExpectedException(typeof(Exception))]
         public void TestIndexerAccess()
         {
             Assert.That(_lateBindingFacade.Index(5).Get(), Is.EqualTo("default"));
@@ -138,7 +138,7 @@ namespace LateBindingHelper.Tests
             Assert.That(_lateBindingFacade.Index(5).Get(), Is.EqualTo(("value:" + "[myValue]")));
         }
 
-        [Test, Ignore]
+        [Test]
         public void WordAutomationTest_NotReallyATestUnit()
         {
             IOperationInvoker wordApp = BindingFactory.CreateAutomationBinding("Word.Application");
