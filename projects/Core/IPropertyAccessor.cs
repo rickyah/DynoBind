@@ -7,7 +7,7 @@ namespace LateBindingHelper
     /// <summary>
     /// Provides an interface for specifying a property to access on a type 
     /// </summary>
-    public interface IPropertyAccessor : IGetSetInvoker
+    public interface IPropertyAccessor
     {
         /// <summary>
         /// Selects the property over which we will invoke an operation.
