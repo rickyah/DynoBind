@@ -56,7 +56,7 @@ namespace LateBindingHelper.Tests
         {
             Assert.That(_lateBindingFacade.Field("myField").Get<Int32>(), Is.EqualTo(27));
 
-            _lateBindingFacade.Field("myField").Set(-55);
+            _lateBindingFacade.Field("myField").Set(-50);
 
             Assert.That(_lateBindingFacade.Field("myField").Get<Int32>(), Is.EqualTo(-50));
         }
@@ -128,39 +128,43 @@ namespace LateBindingHelper.Tests
             Assert.That(_lateBindingFacade.Property("MyProp").Get<Int32>(), Is.EqualTo(69));
         }
 
-        [Test,ExpectedException(typeof(Exception))]
-        public void TestIndexerAccess()
+        [Test, ExpectedException(typeof(OperationCallFailedException))]
+        public void TestBadIndexerAccess()
         {
-            Assert.That(_lateBindingFacade.Index(5).Get(), Is.EqualTo("default"));
-
-            _lateBindingFacade.Index(5).Set("[myValue]");
-
-            Assert.That(_lateBindingFacade.Index(5).Get(), Is.EqualTo(("value:" + "[myValue]")));
+            _lateBindingFacade.Index(5).Get<string>();
         }
 
         [Test]
+        public void TestIndexerAccess()
+        {
+            _lateBindingFacade.Index(5).Set("[myValue]");
+
+            Assert.That(_lateBindingFacade.Index(5).Get<string>(), Is.EqualTo(("[myValue]")));
+        }
+
+        [Test,Ignore]
         public void WordAutomationTest_NotReallyATestUnit()
         {
             IOperationInvoker wordApp = BindingFactory.CreateAutomationBinding("Word.Application");
 
             //Get Word objects to interop operations
-            IOperationInvoker document = wordApp.Property("Documents").Get<IOperationInvoker>();
+            IOperationInvoker document = wordApp.Property("Documents").Get();
             
             document
                 .Method("Add")
                 .Invoke();
-            IOperationInvoker selection = wordApp.Property("Selection").Get<IOperationInvoker>();
+            IOperationInvoker selection = wordApp.Property("Selection").Get();
 
             string str = "Hello World!";
 
-            //Make workd visible
+            //Make Word visible
             wordApp.Property("Visible").Set(true);
 
             //Activate bold
             selection.Method("BoldRun").Invoke();
 
             //Change font size
-            selection.Property("Font").Get<IOperationInvoker>().Property("Size").Set(20);
+            selection.Property("Font").Get().Property("Size").Set(20);
 
             foreach (char c in str)
             {
@@ -169,7 +173,7 @@ namespace LateBindingHelper.Tests
             }
 
             //We need to get the type of the enumeration, that breaks the Late Binding approach as we need
-            //a way to know a specific type, and it's aseembly
+            //a way to know a specific type, and it's assembly
             //Type enumType = Assembly
             //      .LoadWithPartialName("Microsoft.Office.Interop.Word")
             //      .GetType("Microsoft.Office.Interop.Word.WdSaveOptions", false);
