@@ -180,9 +180,9 @@ namespace LateBindingHelper.Implementation
         /// call, with the parameters specified by the <see cref="IMethodInvoker.AddParameter"/> calls
         /// The Method called either has no return parameters or they will be not needed.
         /// </summary>
-        public void Invoke()
+        public IOperationInvoker Invoke()
         {
-            Invoke<object>();
+            return Invoke<IOperationInvoker>();
         }
 
         /// <summary>
@@ -285,9 +285,9 @@ namespace LateBindingHelper.Implementation
         /// <returns>
         /// The data accessed as an <see cref="object"/>
         /// </returns>
-        public object Get()
+        public IOperationInvoker Get()
         {
-            return Get<object>();
+            return Get<IOperationInvoker>();
         }
 
         /// <summary>
