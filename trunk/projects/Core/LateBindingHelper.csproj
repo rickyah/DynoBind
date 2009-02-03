@@ -74,7 +74,7 @@
     <Compile Include="IOperationInvoker.cs" />
     <Compile Include="IParameterBuilder.cs" />
     <Compile Include="IPropertyAccessor.cs" />
-    <Compile Include="LateBindingFactory.cs" />
+    <Compile Include="BindingFactory.cs" />
     <Compile Include="Properties\ProjectAssembly.cs" />
   </ItemGroup>
   <ItemGroup>
