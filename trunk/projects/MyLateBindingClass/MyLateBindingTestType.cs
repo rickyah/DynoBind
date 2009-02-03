@@ -14,6 +14,7 @@ namespace LateBindingHelper.Tests
         private string _indexMock = "default";
         public Int32 myField;
         private Dictionary<int, string> _strLst = new Dictionary<int,string>();
+        private int[,] _matrix = new int [10,10];
 
         /// <summary>
         /// Constructor
@@ -95,6 +96,15 @@ namespace LateBindingHelper.Tests
         {
             get { return _strLst[index]; }
             set { _strLst[index] = value; }
+        }
+
+        /// <summary>
+        /// Two-parameter indexer
+        /// </summary>
+        public int this[int index1, int index2]
+        {
+            get { return _matrix[index1, index2]; }
+            set { _matrix[index1, index2] = value; }
         }
 
         /// <summary>
