@@ -211,9 +211,9 @@ namespace LateBindingHelper.Implementation
         /// </summary>
         internal static T ComputeReturnType<T>(object retVal)
         {
-            if (typeof(IPropertyAccessor).IsAssignableFrom(typeof(T))
-                || typeof(IMethodInvoker).IsAssignableFrom(typeof(T))
-                || typeof(IIndexerAccessor).IsAssignableFrom(typeof(T)) )
+            if (typeof(IPropertyCall).IsAssignableFrom(typeof(T))
+                || typeof(IMethodOperations).IsAssignableFrom(typeof(T))
+                || typeof(IIndexerCall).IsAssignableFrom(typeof(T)) )
                
                 return (T)(object)new Invoker(retVal); //Ugly cast 
             else

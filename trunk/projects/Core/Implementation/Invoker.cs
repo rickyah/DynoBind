@@ -15,7 +15,10 @@ namespace LateBindingHelper.Implementation
     /// <summary>
     /// Implementation for IInvoker
     /// </summary>
-    internal class Invoker : IOperationInvoker
+    internal class Invoker : 
+        IObjectOperation, 
+        IMethodOperations, 
+        IGetSetOperations
     {
         #region Constructor
 
@@ -53,7 +56,7 @@ namespace LateBindingHelper.Implementation
         /// An <see cref="IGetSetInvoker"/> that will establish the operation to
         /// perform over the field specifyed by the fieldName parameter.
         /// </returns>
-        public IGetSetInvoker Field(string fieldName)
+        public IGetSetOperations Field(string fieldName)
         {
             if (OperationName != string.Empty)
                 throw new AlreadyDefinedOperationNameException();
@@ -76,7 +79,7 @@ namespace LateBindingHelper.Implementation
         /// An <see cref="IMethodInvoker"/> that will establish the parameters to
         /// add to this method invocation, and also will allow to perform the method real invocation.
         /// </returns>
-        public IMethodInvoker Method(string methodName)
+        public IMethodOperations Method(string methodName)
         {
             if (OperationName != string.Empty)
                 throw new AlreadyDefinedOperationNameException();
@@ -97,7 +100,7 @@ namespace LateBindingHelper.Implementation
         /// <returns>
         /// A reference to the object which made this operation
         /// </returns>
-        public IMethodInvoker AddParameter(object value)
+        public IMethodOperations AddParameter(object value)
         {
             InnerParameterBuilder.AddParameter(value);
 
@@ -111,7 +114,7 @@ namespace LateBindingHelper.Implementation
         /// <returns>
         /// A reference to the instance which called this operation.
         /// </returns>
-        public IMethodInvoker AddRefParameter(object value)
+        public IMethodOperations AddRefParameter(object value)
         {
             InnerParameterBuilder.AddRefParameter(value);
 
@@ -180,9 +183,9 @@ namespace LateBindingHelper.Implementation
         /// call, with the parameters specified by the <see cref="IMethodInvoker.AddParameter"/> calls
         /// The Method called either has no return parameters or they will be not needed.
         /// </summary>
-        public IOperationInvoker Invoke()
+        public IObjectOperation Invoke()
         {
-            return Invoke<IOperationInvoker>();
+            return Invoke<IObjectOperation>();
         }
 
         /// <summary>
@@ -216,7 +219,7 @@ namespace LateBindingHelper.Implementation
         /// An <see cref="IGetSetInvoker"/> that will establish the operation to
         /// perform over the property specifyed by the propertyName parameter.
         /// </returns>
-        public IGetSetInvoker Property(string propertyName)
+        public IGetSetOperations Property(string propertyName)
         {
             if (OperationName != string.Empty)
                 throw new AlreadyDefinedOperationNameException();
@@ -258,11 +261,11 @@ namespace LateBindingHelper.Implementation
             if (OperationType == EGetSetInvokerOperation.Index)
             {
                 op = EOperationType.PropertyGet;
-                args = new object[] { InnerParameterBuilder.GetParametersAsArray()[0] };
+                args = InnerParameterBuilder.GetParametersAsArray();
             }
             else
             {
-                op = OperationType == EGetSetInvokerOperation.Property ?
+                op = (OperationType == EGetSetInvokerOperation.Property) ?
                         EOperationType.PropertyGet
                        : EOperationType.FieldGet;
             }
@@ -285,9 +288,9 @@ namespace LateBindingHelper.Implementation
         /// <returns>
         /// The data accessed as an <see cref="object"/>
         /// </returns>
-        public IOperationInvoker Get()
+        public IObjectOperation Get()
         {
-            return Get<IOperationInvoker>();
+            return Get<IObjectOperation>();
         }
 
         /// <summary>
@@ -315,7 +318,9 @@ namespace LateBindingHelper.Implementation
             if (OperationType == EGetSetInvokerOperation.Index)
             {
                 op = EOperationType.PropertySet;
-                args = new object[] {InnerParameterBuilder.GetParametersAsArray()[0], obj };
+                List<object> tmp = new List<object>(InnerParameterBuilder.GetParametersAsArray());
+                tmp.Add(obj);
+                args = tmp.ToArray();
             }
             else
             {
@@ -343,19 +348,20 @@ namespace LateBindingHelper.Implementation
         /// <summary>
         /// Performs indexer access over a type.
         /// </summary>
-        /// <param name="index">object used as indexer</param>
+        /// <param name="indexList">object used as indexer</param>
         /// <returns>
         /// An <see cref="IGetSetInvoker"/> that will establish the operation to
         /// perform over the specifyed index.
         /// </returns>
-        public IGetSetInvoker Index(object index)
+        public IGetSetOperations Index(params object[] indexList)
         {
             if (OperationName != string.Empty)
                 throw new AlreadyDefinedOperationNameException();
 
             OperationName = "Item";
             OperationType = EGetSetInvokerOperation.Index;
-            InnerParameterBuilder.AddParameter(index);
+            foreach(object idx in indexList)
+                InnerParameterBuilder.AddParameter(idx);
 
             return this;
         }
