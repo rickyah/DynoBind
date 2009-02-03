@@ -17,7 +17,7 @@ namespace LateBindingHelper.Tests
     {
         #region Test Members
 
-        IOperationInvoker _lateBindingFacade;
+        IObjectInvoker _lateBindingFacade;
 
         #endregion
 
@@ -142,18 +142,29 @@ namespace LateBindingHelper.Tests
             Assert.That(_lateBindingFacade.Index(5).Get<string>(), Is.EqualTo(("[myValue]")));
         }
 
-        [Test,Ignore]
+        [Test]
+        public void TestDoubleIndexerAccess()
+        {
+            Assert.That(_lateBindingFacade.Index(2, 2).Get<int>(), Is.EqualTo(0));
+            
+            _lateBindingFacade.Index(2, 2).Set(1);
+            
+            Assert.That(_lateBindingFacade.Index(2, 2).Get<int>(), Is.EqualTo(1));
+
+        }
+
+        [Test]
         public void WordAutomationTest_NotReallyATestUnit()
         {
-            IOperationInvoker wordApp = BindingFactory.CreateAutomationBinding("Word.Application");
+            IObjectInvoker wordApp = BindingFactory.CreateAutomationBinding("Word.Application");
 
             //Get Word objects to interop operations
-            IOperationInvoker document = wordApp.Property("Documents").Get();
+            IObjectInvoker document = wordApp.Property("Documents").Get();
             
             document
                 .Method("Add")
                 .Invoke();
-            IOperationInvoker selection = wordApp.Property("Selection").Get();
+            IObjectInvoker selection = wordApp.Property("Selection").Get();
 
             string str = "Hello World!";
 
@@ -169,7 +180,7 @@ namespace LateBindingHelper.Tests
             foreach (char c in str)
             {
                 selection.Method("TypeText").AddParameter(c.ToString()).Invoke();
-                System.Threading.Thread.Sleep(200);
+                System.Threading.Thread.Sleep(100);
             }
 
             //We need to get the type of the enumeration, that breaks the Late Binding approach as we need
