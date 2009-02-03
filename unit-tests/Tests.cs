@@ -17,7 +17,7 @@ namespace LateBindingHelper.Tests
     {
         #region Test Members
 
-        IObjectInvoker _lateBindingFacade;
+        IObjectOperation _lateBindingFacade;
 
         #endregion
 
@@ -156,15 +156,15 @@ namespace LateBindingHelper.Tests
         [Test]
         public void WordAutomationTest_NotReallyATestUnit()
         {
-            IObjectInvoker wordApp = BindingFactory.CreateAutomationBinding("Word.Application");
+            IObjectOperation wordApp = BindingFactory.CreateAutomationBinding("Word.Application");
 
             //Get Word objects to interop operations
-            IObjectInvoker document = wordApp.Property("Documents").Get();
+            IObjectOperation document = wordApp.Property("Documents").Get();
             
             document
                 .Method("Add")
                 .Invoke();
-            IObjectInvoker selection = wordApp.Property("Selection").Get();
+            IObjectOperation selection = wordApp.Property("Selection").Get();
 
             string str = "Hello World!";
 
