@@ -13,6 +13,7 @@ namespace LateBindingHelper.Tests
     {
         private string _indexMock = "default";
         public Int32 myField;
+        private Dictionary<int, string> _strLst = new Dictionary<int,string>();
 
         /// <summary>
         /// Constructor
@@ -92,8 +93,8 @@ namespace LateBindingHelper.Tests
         /// </summary>
         public string this[int index]
         {
-            get { return _indexMock; }
-            set { _indexMock = "value:" + value; }
+            get { return _strLst[index]; }
+            set { _strLst[index] = value; }
         }
 
         /// <summary>
