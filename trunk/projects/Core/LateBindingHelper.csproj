@@ -63,17 +63,18 @@
     <Compile Include="Exceptions\AlreadyDefinedOperationNameException.cs" />
     <Compile Include="Exceptions\NoOperationNameDefinedException.cs" />
     <Compile Include="Exceptions\OperationCallFailedException.cs" />
-    <Compile Include="IFieldAccessor.cs" />
-    <Compile Include="IGetSetInvoker.cs" />
-    <Compile Include="IIndexerAccessor.cs" />
-    <Compile Include="IMethodAccessor.cs" />
+    <Compile Include="IFieldCall.cs" />
+    <Compile Include="IGetSetOperations.cs" />
+    <Compile Include="IIndexerCall.cs" />
+    <Compile Include="IMethodLastCallParameters.cs" />
+    <Compile Include="IMethodCall.cs" />
     <Compile Include="Implementation\CommonLateBindingCalls.cs" />
     <Compile Include="Implementation\Invoker.cs" />
     <Compile Include="Implementation\ParameterBuilder.cs" />
-    <Compile Include="IMethodInvoker.cs" />
-    <Compile Include="IOperationInvoker.cs" />
+    <Compile Include="IIMethodOperations.cs" />
+    <Compile Include="IObjectOperation.cs" />
     <Compile Include="IParameterBuilder.cs" />
-    <Compile Include="IPropertyAccessor.cs" />
+    <Compile Include="IPropertyCall.cs" />
     <Compile Include="BindingFactory.cs" />
     <Compile Include="Properties\ProjectAssembly.cs" />
   </ItemGroup>
