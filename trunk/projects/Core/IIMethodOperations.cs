@@ -53,7 +53,7 @@ namespace LateBindingHelper
         /// call, with the parameters specified by the <see cref="IMethodInvoker.AddParameter"/> calls
         /// The Method called either has no return parameters or they will be not needed.
         /// </summary>
-        IObjectInvoker Invoke();
+        IObjectOperation Invoke();
 
 
     }

@@ -35,7 +35,7 @@ namespace LateBindingHelper
         /// <returns>
         /// The data accessed as an <see cref="object"/>
         /// </returns>
-        IObjectInvoker Get();
+        IObjectOperation Get();
 
         /// <summary>
         /// Performs a Set operation to modify data

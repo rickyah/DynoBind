@@ -22,7 +22,7 @@ namespace LateBindingHelper
         /// <returns>
         /// A new <see cref="IOperationInvoker"/> instance.
         /// </returns>
-        public static IOperationInvoker CreateObjectBinding(object obj)
+        public static IObjectOperation CreateObjectBinding(object obj)
         {
             if (obj == null)
                 throw new ArgumentNullException("Late Binding obj is null");
@@ -36,7 +36,7 @@ namespace LateBindingHelper
         /// <returns>
         /// A new <see cref="IOperationInvoker"/> instance.
         /// </returns>
-        public static IOperationInvoker CreateObjectBinding(Type lbType)
+        public static IObjectOperation CreateObjectBinding(Type lbType)
         {
             if (lbType == null)
                 throw new ArgumentNullException("Late Binding type is null");
@@ -52,7 +52,7 @@ namespace LateBindingHelper
         /// <returns>
         /// A new <see cref="IOperationInvoker"/> instance.
         /// </returns>
-        public static IOperationInvoker CreateObjectBinding(Type lbType, params object[] args)
+        public static IObjectOperation CreateObjectBinding(Type lbType, params object[] args)
         {
             if (lbType == null)
                 throw new ArgumentNullException("Late Binding type is null");
@@ -68,7 +68,7 @@ namespace LateBindingHelper
         /// <returns>
         /// A new <see cref="IOperationInvoker"/> instance.
         /// </returns>
-        public static IOperationInvoker CreateObjectBinding(string assemblyName, string typeName)
+        public static IObjectOperation CreateObjectBinding(string assemblyName, string typeName)
         {
             if (assemblyName == null || assemblyName == string.Empty)
                 throw new ArgumentNullException("Invalid assembly name");
@@ -91,7 +91,7 @@ namespace LateBindingHelper
         /// <returns>
         /// A new <see cref="IOperationInvoker"/> instance.
         /// </returns>
-        public static IOperationInvoker CreateObjectBinding(string assemblyName, string typeName, params object[] args)
+        public static IObjectOperation CreateObjectBinding(string assemblyName, string typeName, params object[] args)
         {
             if (assemblyName == null || assemblyName == string.Empty)
                 throw new ArgumentNullException("Invalid assembly name");
@@ -114,7 +114,7 @@ namespace LateBindingHelper
         /// <returns>
         /// A new <see cref="IOperationInvoker"/> instance.
         /// </returns>
-        public static IOperationInvoker CreateAutomationBinding(string progID)
+        public static IObjectOperation CreateAutomationBinding(string progID)
         {
             if (progID == null || progID == string.Empty)
                 throw new ArgumentNullException("Invalid ProgID.");
