@@ -2,15 +2,15 @@
 Example: using LateBindingHelper library to control MS Word using automation:
 
 {{{
-IOperationInvoker wordApp = BindingFactory.CreateAutomationBinding("Word.Application");
+IObjectOperation wordApp = BindingFactory.CreateAutomationBinding("Word.Application");
 
 //Get Word objects to interop operations
-IOperationInvoker document = wordApp.Property("Documents").Get<IOperationInvoker>();
+IObjectOperation document = wordApp.Property("Documents").Get();
 
 document
 	.Method("Add")
 	.Invoke();
-IOperationInvoker selection = wordApp.Property("Selection").Get<IOperationInvoker>();
+IOperationInvoker selection = wordApp.Property("Selection").Get();
 
 string str = "Hello World!";
 
@@ -21,7 +21,7 @@ wordApp.Property("Visible").Set(true);
 selection.Method("BoldRun").Invoke();
 
 //Change font size
-selection.Property("Font").Get<IOperationInvoker>().Property("Size").Set(20);
+selection.Property("Font").Get().Property("Size").Set(20);
 
 foreach (char c in str)
 {
