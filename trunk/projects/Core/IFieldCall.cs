@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace LateBindingHelper
 {
     /// <summary>
@@ -17,6 +13,6 @@ namespace LateBindingHelper
         /// An <see cref="IGetSetInvoker"/> that will establish the operation to
         /// perform over the field specifyed by the fieldName parameter.
         /// </returns>
-        IGetSetOperations Field (string fieldName);
+        IGetSetOperations Field(string fieldName);
     }
 }

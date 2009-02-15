@@ -1,6 +1,5 @@
 namespace LateBindingHelper
 {
-
     /// <summary>
     /// Establish the type of binding that 
     /// .NET must perform on an late binding call

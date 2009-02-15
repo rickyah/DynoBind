@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace LateBindingHelper
 {
@@ -10,6 +8,18 @@ namespace LateBindingHelper
     /// </summary>
     public interface IParameterBuilder
     {
+        /// <summary>
+        /// Returns the total number of parameters in the list.
+        /// </summary>
+        int Count { get; }
+
+        /// <summary>
+        /// Indexer to the parameter list
+        /// </summary>
+        /// <param name="index">Position of the list to the parameter we want to access</param>
+        /// <returns>The parameter </returns>
+        object this[int index] { get; }
+
         /// <summary>
         /// Adds a parameter to the list which is meant to be called using by reference semantics.
         /// </summary>
@@ -37,11 +47,6 @@ namespace LateBindingHelper
         object[] GetParametersAsArray();
 
         /// <summary>
-        /// Returns the total number of parameters in the list.
-        /// </summary>
-        int Count { get;}
-
-        /// <summary>
         /// Removes all parameters in the list
         /// </summary>
         void Clear();
@@ -55,12 +60,5 @@ namespace LateBindingHelper
         /// </summary>
         /// <returns>An IList of booleans.</returns>
         IList<bool> GetReferenceParameterList();
-
-        /// <summary>
-        /// Indexer to the parameter list
-        /// </summary>
-        /// <param name="index">Position of the list to the parameter we want to access</param>
-        /// <returns>The parameter </returns>
-        object this[int index] { get;}
     }
 }

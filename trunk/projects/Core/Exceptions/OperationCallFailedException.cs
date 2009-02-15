@@ -1,33 +1,37 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Runtime.Serialization;
 
 namespace LateBindingHelper.Exceptions
 {
-
     /// <summary>
     /// Thrown when a Late binding operation call fails.
     /// </summary>
-    [global::System.Serializable]
+    [Serializable]
     public class OperationCallFailedException : Exception
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationCallFailedException"/> class.
         /// </summary>
-        public OperationCallFailedException() { }
+        public OperationCallFailedException()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationCallFailedException"/> class.
         /// </summary>
         /// <param name="message">The message.</param>
-        public OperationCallFailedException(string message) : base(message) { }
+        public OperationCallFailedException(string message) : base(message)
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationCallFailedException"/> class.
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="inner">The inner.</param>
-        public OperationCallFailedException(string message, Exception inner) : base(message, inner) { }
+        public OperationCallFailedException(string message, Exception inner) : base(message, inner)
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationCallFailedException"/> class.
@@ -37,9 +41,10 @@ namespace LateBindingHelper.Exceptions
         /// <exception cref="T:System.ArgumentNullException">The <paramref name="info"/> parameter is null. </exception>
         /// <exception cref="T:System.Runtime.Serialization.SerializationException">The class name is null or <see cref="P:System.Exception.HResult"/> is zero (0). </exception>
         protected OperationCallFailedException(
-          System.Runtime.Serialization.SerializationInfo info,
-          System.Runtime.Serialization.StreamingContext context)
-            : base(info, context) { }
+            SerializationInfo info,
+            StreamingContext context)
+            : base(info, context)
+        {
+        }
     }
-
 }
