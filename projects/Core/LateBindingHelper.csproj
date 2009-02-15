@@ -72,7 +72,7 @@
     <Compile Include="Implementation\Invoker.cs" />
     <Compile Include="Implementation\ParameterBuilder.cs" />
     <Compile Include="IIMethodOperations.cs" />
-    <Compile Include="IObjectOperation.cs" />
+    <Compile Include="IDynamic.cs" />
     <Compile Include="IParameterBuilder.cs" />
     <Compile Include="IPropertyCall.cs" />
     <Compile Include="BindingFactory.cs" />

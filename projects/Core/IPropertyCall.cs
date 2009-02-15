@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace LateBindingHelper
 {
     /// <summary>
@@ -14,7 +10,7 @@ namespace LateBindingHelper
         /// </summary>
         /// <param name="propertyName">String with the name of the property to be invoked</param>
         /// <returns> 
-        /// An <see cref="IGetSetInvoker"/> that will establish the operation to
+        /// An <see cref="IGetSetOperations"/> that will establish the operation to
         /// perform over the property specifyed by the propertyName parameter.
         /// </returns>
         IGetSetOperations Property(string propertyName);

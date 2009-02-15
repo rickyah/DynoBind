@@ -1,10 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Reflection;
 using System.Diagnostics;
+using System.Reflection;
 using System.Runtime.InteropServices;
-
 using LateBindingHelper.Exceptions;
 
 namespace LateBindingHelper.Implementation
@@ -69,15 +66,14 @@ namespace LateBindingHelper.Implementation
             //Do late call
             try
             {
-
                 retVal = instanceObject.GetType().InvokeMember(operationName,
-                                        ComputeBindingFlags(type),
-                                        null,
-                                        instanceObject,
-                                        args,
-                                        new ParameterModifier[] { refParams },
-                                        null,
-                                        null);
+                                                               ComputeBindingFlags(type),
+                                                               null,
+                                                               instanceObject,
+                                                               args,
+                                                               new ParameterModifier[] {refParams},
+                                                               null,
+                                                               null);
             }
             catch (Exception e)
             {
@@ -93,7 +89,6 @@ namespace LateBindingHelper.Implementation
 
             //All OK
             return true;
-
         }
 
         /// <summary>
@@ -121,11 +116,11 @@ namespace LateBindingHelper.Implementation
         /// Throwed if the call fails
         /// </exception>
         internal static bool CallOperation(
-           object instanceObject,
-           string operationName,
-           object[] args,
-           out object retVal,
-           EOperationType operationType)
+            object instanceObject,
+            string operationName,
+            object[] args,
+            out object retVal,
+            EOperationType operationType)
         {
             if (instanceObject == null)
                 throw new Exception(ErrorStrings.LATEBINDING_OBJECT_NOT_SET);
@@ -137,19 +132,17 @@ namespace LateBindingHelper.Implementation
             if (operationName == string.Empty)
                 throw new ArgumentException(ErrorStrings.LATEBINDING_EMPTY_CALL_STRING);
 
-            StackFrame sf = new StackFrame(true);
             BindingFlags bFlags = ComputeBindingFlags(operationType);
 
             //Do call
             try
             {
-
                 //Do late binding call
                 retVal = instanceObject.GetType().InvokeMember(operationName,
-                                                            bFlags,
-                                                            null,
-                                                            instanceObject,
-                                                            args);
+                                                               bFlags,
+                                                               null,
+                                                               instanceObject,
+                                                               args);
             }
             catch (Exception e)
             {
@@ -180,7 +173,6 @@ namespace LateBindingHelper.Implementation
         /// </returns>
         internal static BindingFlags ComputeBindingFlags(EOperationType type)
         {
-
             switch (type)
             {
                 case EOperationType.Method:
@@ -200,24 +192,23 @@ namespace LateBindingHelper.Implementation
             }
 
             return BindingFlags.Default;
-
         }
 
         /// <summary>
         /// Given a generic type T:
-        /// - If T is a a <see cref="IOperationInvoker"/> 
-        /// returns a new IOperationInvoker to be used over the retVal parameter.
+        /// - If T is a a <see cref="IDynamic"/> 
+        /// returns a new IDynamic to be used over the retVal parameter.
         /// - If T is any other type, it just returns the retVal parameter casted to T
         /// </summary>
         internal static T ComputeReturnType<T>(object retVal)
         {
-            if (typeof(IPropertyCall).IsAssignableFrom(typeof(T))
-                || typeof(IMethodOperations).IsAssignableFrom(typeof(T))
-                || typeof(IIndexerCall).IsAssignableFrom(typeof(T)) )
-               
-                return (T)(object)new Invoker(retVal); //Ugly cast 
-            else
-                return (T)retVal;
+            if (typeof (IDynamic).IsAssignableFrom(typeof (T))
+                || typeof (IPropertyCall).IsAssignableFrom(typeof (T))
+                || typeof (IMethodOperations).IsAssignableFrom(typeof (T))
+                || typeof (IIndexerCall).IsAssignableFrom(typeof (T)))
+
+                return (T) (object) new Invoker(retVal); //Ugly cast 
+            return (T) retVal;
         }
     }
 }

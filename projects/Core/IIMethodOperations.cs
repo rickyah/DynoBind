@@ -1,13 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LateBindingHelper
 {
-
     /// <summary>
     /// Provides an interface which will allow adding parameters to a method defined
-    /// bya a <see cref="IMethodAccessor"/>,  and invoke that method
+    /// by a <see cref="IMethodCall"/>,  and invoke that method
     /// </summary>
     public interface IMethodOperations
     {
@@ -25,13 +22,13 @@ namespace LateBindingHelper
         /// </summary>
         /// <param name="value">object to be passed as parameter</param>
         /// <returns>
-        /// A reference to the <see cref="IMethodInvoker"/> instance which called this method.
+        /// A reference to the <see cref="IMethodOperations"/> instance which called this method.
         /// </returns>
         IMethodOperations AddRefParameter(object value);
 
         /// <summary>
-        /// Performs the call to the method defined by a previous <see cref="IMethodAccessor.Method"/>
-        /// call, with the parameters specified by the <see cref="IMethodInvoker.AddParameter"/> calls
+        /// Performs the call to the method defined by a previous <see cref="IMethodCall.Method"/>
+        /// call, with the parameters specified by the <see cref="IMethodOperations.AddParameter"/> calls
         /// casting the return value to the specified type.
         /// </summary>
         /// <typeparam name="T">Type of the data returned by the method call</typeparam>
@@ -49,12 +46,10 @@ namespace LateBindingHelper
         T Invoke<T>();
 
         /// <summary>
-        /// Performs the call to the method which was defined by a previous <see cref="IMethodAccessor.Method"/>
-        /// call, with the parameters specified by the <see cref="IMethodInvoker.AddParameter"/> calls
+        /// Performs the call to the method which was defined by a previous <see cref="IMethodCall"/>
+        /// call, with the parameters specified by the <see cref="IMethodOperations.AddParameter"/> calls
         /// The Method called either has no return parameters or they will be not needed.
         /// </summary>
-        IObjectOperation Invoke();
-
-
+        IDynamic Invoke();
     }
 }

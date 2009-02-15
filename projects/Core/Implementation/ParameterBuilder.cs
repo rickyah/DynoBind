@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace LateBindingHelper.Implementation
 {
@@ -10,19 +8,17 @@ namespace LateBindingHelper.Implementation
     /// </summary>
     internal class ParameterBuilder : IParameterBuilder
     {
-        #region Private Members
-        /// <summary>
-        /// Holds the list of parameters
-        /// </summary>
-        private List<object> _parameters = new List<object>();
-
         /// <summary>
         /// Holds which position in the list of parameters
         /// is passed with by reference semantics of by value
         /// semantics
         /// </summary>
-        private List<bool> _isRef = new List<bool>(); 
-        #endregion
+        private readonly List<bool> _isRef = new List<bool>();
+
+        /// <summary>
+        /// Holds the list of parameters
+        /// </summary>
+        private readonly List<object> _parameters = new List<object>();
 
         #region Miembros de IParameterList
 
@@ -52,7 +48,6 @@ namespace LateBindingHelper.Implementation
         /// </returns>
         public IParameterBuilder AddRefParameter(object value)
         {
-
             _parameters.Add(value);
             _isRef.Add(true);
 
@@ -74,7 +69,7 @@ namespace LateBindingHelper.Implementation
         /// <returns></returns>
         public object[] GetParametersAsArray()
         {
-            return _parameters.ToArray(); 
+            return _parameters.ToArray();
         }
 
         /// <summary>
@@ -84,10 +79,7 @@ namespace LateBindingHelper.Implementation
         /// <returns>The parameter </returns>
         public object this[int index]
         {
-            get
-            {
-                return _parameters[index];
-            }
+            get { return _parameters[index]; }
         }
 
         /// <summary>
@@ -111,6 +103,7 @@ namespace LateBindingHelper.Implementation
         {
             get { return _parameters.Count; }
         }
+
         #endregion
     }
 }

@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LateBindingHelper
 {
@@ -8,8 +6,6 @@ namespace LateBindingHelper
     /// Provides get and set operations that can be invoked on a type's
     /// property o field
     /// </summary>
-    /// <see cref="IFieldAccessor"/>
-    /// <see cref="IPropertyAccessor"/>
     public interface IGetSetOperations
     {
         /// <summary>
@@ -35,7 +31,7 @@ namespace LateBindingHelper
         /// <returns>
         /// The data accessed as an <see cref="object"/>
         /// </returns>
-        IObjectOperation Get();
+        IDynamic Get();
 
         /// <summary>
         /// Performs a Set operation to modify data
