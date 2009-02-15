@@ -1,12 +1,6 @@
 using System;
-using System.Text;
-using System.Reflection;
-using System.Collections.Generic;
-
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
-
-using LateBindingHelper;
 using LateBindingHelper.Exceptions;
 
 
@@ -17,7 +11,7 @@ namespace LateBindingHelper.Tests
     {
         #region Test Members
 
-        IObjectOperation _lateBindingFacade;
+        IDynamic _lateBindingFacade;
 
         #endregion
 
@@ -156,15 +150,15 @@ namespace LateBindingHelper.Tests
         [Test]
         public void WordAutomationTest_NotReallyATestUnit()
         {
-            IObjectOperation wordApp = BindingFactory.CreateAutomationBinding("Word.Application");
+            IDynamic wordApp = BindingFactory.CreateAutomationBinding("Word.Application");
 
             //Get Word objects to interop operations
-            IObjectOperation document = wordApp.Property("Documents").Get();
+            IDynamic document = wordApp.Property("Documents").Get();
             
             document
                 .Method("Add")
                 .Invoke();
-            IObjectOperation selection = wordApp.Property("Selection").Get();
+            IDynamic selection = wordApp.Property("Selection").Get();
 
             string str = "Hello World!";
 
