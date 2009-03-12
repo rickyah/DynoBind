@@ -147,8 +147,8 @@ namespace LateBindingHelper.Tests
 
         }
 
-        [Test]
-        public void WordAutomationTest_NotReallyATestUnit()
+        [Test,Ignore]
+        public void WordAutomationTest_NotReallyATest()
         {
             IDynamic wordApp = BindingFactory.CreateAutomationBinding("Word.Application");
 
