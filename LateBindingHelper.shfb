@@ -14,10 +14,10 @@
     <ProjectSummary />
     <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors, Namespace, TypeParameter</MissingTags>
     <VisibleItems>InheritedMembers, InheritedFrameworkMembers, Protected, SealedProtected</VisibleItems>
-    <HtmlHelp1xCompilerPath path="" />
+    <HtmlHelp1xCompilerPath path="..\..\..\..\Program Files\HTML Help Workshop\" />
     <HtmlHelp2xCompilerPath path="" />
     <OutputPath>.\lastbuild\documentation\</OutputPath>
-    <SandcastlePath path="" />
+    <SandcastlePath path="..\..\..\..\Program Files\Sandcastle\" />
     <WorkingPath path="" />
     <CleanIntermediates>True</CleanIntermediates>
     <KeepLogFile>True</KeepLogFile>

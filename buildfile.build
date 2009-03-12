@@ -407,6 +407,7 @@
 	<target 
 		name="GenerateDoc" 
 		description="- Generate documentation files">
+		
 	</target>		
 	
 	<!-- Generates a new GUID for the project -->
@@ -472,7 +473,10 @@
 				</fileset>
 			</nunit2report>
 			
-			<move file="${project.directory.lastbuild.reports}\index.html" tofile="${project.directory.lastbuild.reports}\${project.filepath.tests-report}.html" />
+			<move 
+				overwrite="true"
+				file="${project.directory.lastbuild.reports}\index.html" 
+				tofile="${project.directory.lastbuild.reports}\${project.filepath.tests-report}.html" />
 			
 			<echo message="Generated unit test report file at ${project.directory.lastbuild.reports}\${project.filepath.tests-report}.html" />
 			</when>
