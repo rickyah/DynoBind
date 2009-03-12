@@ -278,15 +278,23 @@ namespace LateBindingHelper.Implementation
                          : EOperationType.FieldGet;
             }
 
-            CommonLateBindingOperations.CallOperation(
-                InstanceObject,
-                OperationName,
-                args,
-                out retVal,
-                op);
-
-            ClearCall();
-
+            try
+            {
+                CommonLateBindingOperations.CallOperation(
+                    InstanceObject,
+                    OperationName,
+                    args,
+                    out retVal,
+                    op);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                ClearCall();
+            }
             return CommonLateBindingOperations.ComputeReturnType<T>(retVal);
         }
 
@@ -408,12 +416,23 @@ namespace LateBindingHelper.Implementation
 
             if (InnerParameterBuilder.Count <= 0)
             {
+                try
+                {
                 CommonLateBindingOperations.CallOperation(
                     InstanceObject,
                     OperationName,
                     args,
                     out retValue,
                     EOperationType.Method);
+                }
+                catch
+                {
+                    throw;
+                }
+                finally
+                {           
+                    ClearCall();
+                }
             }
             else
             {
@@ -423,18 +442,27 @@ namespace LateBindingHelper.Implementation
                     refParams[i] = InnerParameterBuilder.GetReferenceParameterList()[i];
                 }
 
-                CommonLateBindingOperations.CallOperation(
-                    InstanceObject,
-                    OperationName,
-                    args,
-                    out retValue,
-                    refParams,
-                    EOperationType.Method);
+                try
+                {
+                    CommonLateBindingOperations.CallOperation(
+                        InstanceObject,
+                        OperationName,
+                        args,
+                        out retValue,
+                        refParams,
+                        EOperationType.Method);
+                }
+                catch
+                {
+                    throw;
+                }
+                finally
+                {           
+                    ClearCall();
+                }
             }
 
             LastCallParameters = args;
-
-            ClearCall();
 
             return CommonLateBindingOperations.ComputeReturnType<T>(retValue);
         }
