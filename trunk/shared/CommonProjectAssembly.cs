@@ -19,4 +19,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("(C) 2008")]
 [assembly: AssemblyTrademark("")]
 [assembly: Guid("47f666b9-fa01-4b03-acf9-3b583d440f0f")]
-[assembly: AssemblyVersion("2.3.18.4617")]
+[assembly: AssemblyVersion("2.5.18.4617")]
