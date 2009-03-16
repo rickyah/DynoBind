@@ -340,22 +340,29 @@ namespace LateBindingHelper.Implementation
             }
             else
             {
-                op = OperationType == EGetSetInvokerOperation.Property
-                         ?
+                op = OperationType == EGetSetInvokerOperation.Property ?
                              EOperationType.PropertySet
                          : EOperationType.FieldSet;
-                args = new object[] {obj};
+                args = new object[] { obj };
             }
 
-            CommonLateBindingOperations.CallOperation(
-                InstanceObject,
-                OperationName,
-                args,
-                out retVal,
-                op);
-
-
-            ClearCall();
+            try
+            {
+                CommonLateBindingOperations.CallOperation(
+                    InstanceObject,
+                    OperationName,
+                    args,
+                    out retVal,
+                    op);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                ClearCall();
+            }
         }
 
         #endregion
@@ -418,19 +425,19 @@ namespace LateBindingHelper.Implementation
             {
                 try
                 {
-                CommonLateBindingOperations.CallOperation(
-                    InstanceObject,
-                    OperationName,
-                    args,
-                    out retValue,
-                    EOperationType.Method);
+                    CommonLateBindingOperations.CallOperation(
+                        InstanceObject,
+                        OperationName,
+                        args,
+                        out retValue,
+                        EOperationType.Method);
                 }
                 catch
                 {
                     throw;
                 }
                 finally
-                {           
+                {
                     ClearCall();
                 }
             }
@@ -457,7 +464,7 @@ namespace LateBindingHelper.Implementation
                     throw;
                 }
                 finally
-                {           
+                {
                     ClearCall();
                 }
             }
