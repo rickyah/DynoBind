@@ -27,6 +27,31 @@ namespace LateBindingHelper
         IMethodOperations AddRefParameter(object value);
 
         /// <summary>
+        /// Add a specific number of instances for System.Type.Missing parameters to the call.
+        /// Usefull for interop operations as C#3.0 doesn't supports default values for parameters in a method call.
+        /// </summary>
+        /// <param name="repetitions">
+        /// Number of missing parameters to use. Must be equal or greater than one
+        /// </param>
+        /// <returns>
+        /// A reference to the <see cref="IMethodOperations"/> instance which called this method.
+        /// </returns>
+        IMethodOperations AddMissingParameters(int repetitions);
+
+        /// <summary>
+        /// Add a specific number of instances for System.Type.Missing parameters to the call,
+        /// passing the parameters by reference.
+        /// Usefull for interop operations as C#3.0 doesn't supports default values for parameters in a method call.
+        /// </summary>
+        /// <param name="repetitions">
+        /// Number of missing parameters to use. Must be equal or greater than one
+        /// </param>
+        /// <returns>
+        /// A reference to the <see cref="IMethodOperations"/> instance which called this method.
+        /// </returns>
+        IMethodOperations AddRefMissingParameters(int repetitions);
+
+        /// <summary>
         /// Performs the call to the method defined by a previous <see cref="IMethodCall.Method"/>
         /// call, with the parameters specified by the <see cref="IMethodOperations.AddParameter"/> calls
         /// casting the return value to the specified type.

@@ -26,6 +26,7 @@ namespace LateBindingHelper.Implementation
 
         #endregion
 
+        #region Fields
         /// <summary>
         /// Where the parameters added by a AddParameter call
         /// will be stored before the late binding call is made 
@@ -56,6 +57,7 @@ namespace LateBindingHelper.Implementation
         /// call will be performed
         /// </summary>
         private EGetSetInvokerOperation? _operationType;
+        #endregion
 
         #region IDynamic Members
 
@@ -203,6 +205,18 @@ namespace LateBindingHelper.Implementation
             OperationType = null;
             OperationName = string.Empty;
             InnerParameterBuilder.Clear();
+        }
+
+        /// <summary>
+        ///     Checks if a number is greater than 1, throwing an exception if this is not true.
+        /// </summary>
+        /// <param name="integer">
+        ///     Number to be checked.
+        /// </param>
+        private void AssertIntegerIsPositive(int integer)
+        {
+            if (integer <= 0)
+                throw new ArgumentException(string.Format("integer must be equal or greater than 1 and is [{0}]", integer));
         }
 
         #endregion
@@ -482,6 +496,48 @@ namespace LateBindingHelper.Implementation
         public IDynamic Invoke()
         {
             return Invoke<IDynamic>();
+        }
+
+
+        /// <summary>
+        /// Add a specific number of instances for System.Type.Missing parameters to the call.
+        /// Usefull for interop operations as C#3.0 doesn't supports default values for parameters in a method call.
+        /// </summary>
+        /// <param name="repetitions">
+        /// Number of missing parameters to use. Must be equal or greater than one
+        /// </param>
+        /// <returns>
+        /// A reference to the <see cref="IMethodOperations"/> instance which called this method.
+        /// </returns>
+        public IMethodOperations AddMissingParameters(int repetitions)
+        {
+            AssertIntegerIsPositive(repetitions);
+
+            for (int i = 0; i < repetitions; i++)
+                AddParameter(Type.Missing);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Add a specific number of instances for System.Type.Missing parameters to the call,
+        /// passing the parameters by reference.
+        /// Usefull for interop operations as C#3.0 doesn't supports default values for parameters in a method call.
+        /// </summary>
+        /// <param name="repetitions">
+        /// Number of missing parameters to use. Must be equal or greater than one
+        /// </param>
+        /// <returns>
+        /// A reference to the <see cref="IMethodOperations"/> instance which called this method.
+        /// </returns>
+        public IMethodOperations AddRefMissingParameters(int repetitions)
+        {
+            AssertIntegerIsPositive(repetitions);
+
+            for (int i = 0; i < repetitions; i++)
+                AddRefParameter(Type.Missing);
+
+            return this;
         }
 
         #endregion
