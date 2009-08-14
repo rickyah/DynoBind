@@ -2,10 +2,10 @@
 Example: using LateBindingHelper library to control MS Word using automation:
 
 {{{
-IObjectOperation wordApp = BindingFactory.CreateAutomationBinding("Word.Application");
+IDynamic wordApp = BindingFactory.CreateAutomationBinding("Word.Application");
 
 //Get Word objects to interop operations
-IObjectOperation document = wordApp.Property("Documents").Get();
+IDynamic document = wordApp.Property("Documents").Get();
 
 document
 	.Method("Add")
