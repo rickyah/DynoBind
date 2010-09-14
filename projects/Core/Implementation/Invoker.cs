@@ -303,7 +303,29 @@ namespace LateBindingHelper.Implementation
             }
             catch
             {
-                throw;
+                // Sometimes -like when using Office Interop- the index get operation 
+                // must be treated as a method
+                if (OperationType == EGetSetInvokerOperation.Index)
+                {
+                    op = EOperationType.Method;
+                    try
+                    {
+                        CommonLateBindingOperations.CallOperation(
+                            InstanceObject,
+                            OperationName,
+                            args,
+                            out retVal,
+                            op);
+                    }
+                    catch
+                    {
+                        throw;
+                    }
+                }
+                else
+                {
+                    throw;
+                }
             }
             finally
             {
