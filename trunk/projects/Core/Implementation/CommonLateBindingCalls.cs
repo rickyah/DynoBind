@@ -189,6 +189,12 @@ namespace LateBindingHelper.Implementation
 
                 case EOperationType.FieldGet:
                     return BindingFlags.GetField;
+                
+                case EOperationType.IndexGet:
+                    return BindingFlags.InvokeMethod;
+
+                case EOperationType.IndexSet:
+                    return BindingFlags.InvokeMethod;
             }
 
             return BindingFlags.Default;

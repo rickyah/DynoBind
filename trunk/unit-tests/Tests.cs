@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using LateBindingHelper.Exceptions;
@@ -195,6 +196,40 @@ namespace LateBindingHelper.Tests
             //Quit
             wordApp.Method("Quit").AddParameter(0).Invoke();
         }
+
+        [Test, Ignore]
+        public void WordAutomationTest_NotReallyATest2()
+        {
+
+            //Microsoft.Office.Interop.Word.Application oWord = new Microsoft.Office.Interop.Word.Application();
+            //oWord.Visible = true;
+            //int enumIndex = (int)Microsoft.Office.Interop.Word.WdWordDialog.wdDialogFileNew;
+            //Microsoft.Office.Interop.Word.Dialog dlg = oWord.Dialogs[(Microsoft.Office.Interop.Word.WdWordDialog)enumIndex]; 
+            //object timeOut = 1000;
+            //dlg.Show(ref timeOut);
+             
+            //Get Type of an Excel Automation object.
+
+             
+            IDynamic wordApp = BindingFactory.CreateAutomationBinding("Word.Application");
+            wordApp.Property("Visible").Set(true);
+             
+            object missing = System.Reflection.Missing.Value;
+            object index = 79; //New Dialog enumeration value
+            IDynamic dialogs = wordApp.Property("Dialogs")
+                                       .Get<IDynamic>();
+
+            IDynamic dialog = dialogs.Index(79).Get<IDynamic>();                                       
+                           
+            object timeout = 1000;
+            dialog.Method("Show").AddRefParameter(timeout).Invoke();
+
+            wordApp.Property("Visible").Set(false);
+
+            //Quit
+            wordApp.Method("Quit").AddParameter(0).Invoke();
+        }
+
         #endregion
     }
 }
