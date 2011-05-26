@@ -26,9 +26,9 @@ That implies that no type checks can be performed at compile time using late bin
 
 = Using the library =
 
-All late binding functionality is based on the interface  `LateBindingHelper.IObjectOperation`
+All late binding functionality is based on the interface  `LateBindingHelper.IDynamic`
 
-Adquisition of an `IObjectOperation` interface is done using a Factory: `LateBindingHelper.BindingFactory` which allows creation of an `IObjectOperation` binded to an object instance, using various possibilities:
+Adquisition of an `IDynamic` interface is done using a Factory: `LateBindingHelper.BindingFactory` which allows creation of an `IDynamic` binded to an object instance, using various possibilities:
 
   * Using an instance of an object as a "prototype" 
   *Using a 'System.Type' to create a new instance of the Type at runtip (optionally arguments for the constructor can be also specified)
@@ -40,25 +40,25 @@ E.g:
 MyClass myClassInstance = new MyClass();
 
 //Late Binding calls will be dispatched to the myClassInstance object
-IObjectOperation lbf1 = BindingFactory.CreateObjectBinding( myClassInstance );
+IDynamic lbf1 = BindingFactory.CreateObjectBinding( myClassInstance );
 
 //Creates a new MyClass object instance where the late binding call will be dispatched 
 //using the default constructor
-IObjectOperation lbf2 = BindingFactory.CreateObjectBinding( typeof(MyClass) );
+IDynamic lbf2 = BindingFactory.CreateObjectBinding( typeof(MyClass) );
 
 int integerArgument = 2008;
 //Creates a new MyClass object instance where the late binding call will be dispatched passing
 //arguments to the constructor
-IObjectOperation lbf3 = BindingFactory.CreateObjectBinding( typeof(MyClass),  integerArgument );
+IDynamic lbf3 = BindingFactory.CreateObjectBinding( typeof(MyClass),  integerArgument );
 }}}
 
 'BindingFactory.CreateAutomationBinding()' factory makes a binding to an Automation application given its Running Object Table (ROT) name
 or ProcID:
 {{{
-IObjectOperation word = BindingFactory.CreateAutomationBinding("word.application");
+IDynamic word = BindingFactory.CreateAutomationBinding("word.application");
 }}}
 
-Once we have an instance of an IObjectOperation interface, we can send any operation we want 
+Once we have an instance of an IDynamic interface, we can send any operation we want 
 to the object using the interface, and the operation will be issued at runtime:
 
 == Calling a method ==
@@ -182,11 +182,11 @@ myLBInvoker
 	.Set("[myNewValue]");
 }}}
 
-== One more thing: IObjectOperation as return type ==
+== One more thing: IDynamic as return type ==
 When retrieving a value without specifying the return type you'll receive an working instance of an object defining the 
-`IObjectOperation` interface. That means that you can concatenate late binding call on different objects:
+`IDynamic` interface. That means that you can concatenate late binding call on different objects:
 {{{
-IObjectOperation yetAnotherOrdersManager = BindingFactory.CreateBinding("MyOrdersManager");
+IDynamic yetAnotherOrdersManager = BindingFactory.CreateBinding("MyOrdersManager");
 
 
 int firstOrderID = yetAnotherOrdersManager 
