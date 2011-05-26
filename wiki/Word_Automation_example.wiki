@@ -10,7 +10,7 @@ IDynamic document = wordApp.Property("Documents").Get();
 document
 	.Method("Add")
 	.Invoke();
-IOperationInvoker selection = wordApp.Property("Selection").Get();
+IDynamic selection = wordApp.Property("Selection").Get();
 
 string str = "Hello World!";
 
