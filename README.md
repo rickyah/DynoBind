@@ -72,7 +72,4 @@ We even added error checks just because it is so easy! ;)
 
 # Documentation
 
-For more help on using this library please check the [Usage wiki page](http://code.google.com/p/latebindinghelper/wiki/Usage)
-
-A deeply description of the 1.**version of the library is available at CodeProject:
-[Late Binding Helper Library in CodeProject](http://www.codeproject.com/KB/cs/LateBindingHelper.aspx)**
+For more help on using this library please check the [[Usage and examples|Usage and examples]] on the wiki
